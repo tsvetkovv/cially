@@ -1,0 +1,17 @@
+{
+  "name": "cially-bot",
+  "version": "0.0.1",
+  "description": "The Official Code of Cially Discord Bot",
+  "license": "ISC",
+  "author": "skellgreco",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "path": "^0.12.7"
+  }
+}
