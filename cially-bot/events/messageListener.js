@@ -12,6 +12,10 @@ module.exports = {
   once: false,
   execute(message) {
 
+    // Get the number of words per message
+    const totalWords = message.content.trim().split(/\s+/).filter(word => word.length > 0);
+
+
     let info = {"guildId": message.guild.id, "messageId": message.id}
 
     const opts = {
@@ -19,7 +23,7 @@ module.exports = {
       body: JSON.stringify(info)
     }
 
-    get.post(opts, function (err, res) {
+    /* get.post(opts, function (err, res) {
       debug({text: `HTTP Request sent`});
       if (err) throw err
       res.pipe(process.stdout) // `res` is a stream
@@ -27,10 +31,10 @@ module.exports = {
       res.on('data', function (chunk) {
         debug({text: `Response received and HTTP communication ended for Message ID: ` + message.id});
       })
-    })
+    }) */
 
     //Logs
-    debug({text: `New Message: \nAuthor: ${message.author.username}\nGuild: ${message.guild.name}, ${message.guild.id}\nMessage ID: ${message.id} \n`});
+    debug({text: `New Message: \nAuthor: ${message.author.username}\nGuild: ${message.guild.name}, ${message.guild.id}\nMessage ID: ${message.id} \nMessage Length: ${totalWords.length} \nChannel: ${message.channel.name}, ${message.channelId}`});
 
   },
 }

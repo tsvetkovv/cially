@@ -19,14 +19,13 @@ var colors = require("colors");
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 
-// Client Initialization
+// TODO Currently added every single intent. Planning to fix once I have a final version of the code
+// Using https://discord-intents-calculator.vercel.app/ to generate the intents ID
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+  intents: 53608447
 });
+
+
 
 // Command Handler
 client.commands = new Collection();
