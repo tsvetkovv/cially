@@ -28,6 +28,8 @@ export async function POST(request: Request) {
       .getFirstListItem(`discordID=${guildID}`, {});
     console.log("[DEBUG] Guild has been found and is ready to add data to it");
 
+    // FIXME Multiple messages dont get tracked
+
     try {
       const messageData = {
         author: authorID,
@@ -89,6 +91,9 @@ export async function GET(
   console.log(guild.id);
 
   try {
+
+    // TODO Fetch the timezones correctly
+
     // you can also fetch all records at once via getFullList
     const records = await pb.collection("messages").getFullList({
       filter: `guild_id ?= "${guild.id}"`,
@@ -98,27 +103,39 @@ export async function GET(
 
     const dataArray = [];
 
+    let i = 0
+    while (i < 25) {
+      if (i < 10) {
+        dataArray.push({hour: `0${i}`, amount: 0})
+      } else {
+        dataArray.push({hour: `${i}`, amount: 0})
+      }
+      
+      i = i + 1
+    }
+
+    console.log(records)
+
     records.forEach(record => {
-      let minutes = [record.created.slice(14, 16)]
+      let minutes = [record.created.slice(11, 13)]
       minutes.forEach(minute => {
-        console.log(minute)
+        // console.log(minute)
         let position = dataArray.findIndex((item) => item.hour === minute)
         if (position != -1) {
           dataArray[position].amount = dataArray[position].amount + 1
         } else {
           dataArray.push({hour: minute, amount: 1})
         }
-        console.log(position)
+        // console.log(position)
       });
-      console.log(minutes)
+      // console.log(minutes)
 
       
     });
-
-    // console.log(records);
+    dataArray.sort((a, b) => a.hour - b.hour)
     console.log(dataArray)
 
-    return Response.json({ records });
+    return Response.json({ dataArray });
   } catch (err) {
     console.log(err);
   }

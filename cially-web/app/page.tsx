@@ -44,7 +44,7 @@ export default function Home() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-    router.push(`/dashboard/${values.guildID}`)
+    router.push(`/dashboard/?guildID=${values.guildID}`)
   }
 
   return (
