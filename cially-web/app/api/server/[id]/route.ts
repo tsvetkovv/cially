@@ -96,23 +96,19 @@ export async function GET(
       expand: "created",
     });
 
-    const dataArray = [
-      {
-        "hour": "08",
-        "amount": "0"
-      }
-    ]
+    const dataArray = [];
 
-    // FIXME totally broken :)
     records.forEach(record => {
       let minutes = [record.created.slice(14, 16)]
       minutes.forEach(minute => {
-        let availableMinutes = dataArray.find((element) => element[0].hour == JSON.stringify(minute))
-        if (availableMinutes) {
-          console.log('found data')
+        console.log(minute)
+        let position = dataArray.findIndex((item) => item.hour === minute)
+        if (position != -1) {
+          dataArray[position].amount = dataArray[position].amount + 1
         } else {
-         console.log('did not find data')
+          dataArray.push({hour: minute, amount: 1})
         }
+        console.log(position)
       });
       console.log(minutes)
 
