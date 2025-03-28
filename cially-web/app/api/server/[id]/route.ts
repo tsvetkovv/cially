@@ -1,5 +1,6 @@
 // Imports
 import PocketBase from "pocketbase";
+import registerGuild from "../../_logic/registerGuild";
 
 // Initialize Pocketbase URL
 const url = process.env.POCKETBASE_URL;
@@ -49,16 +50,7 @@ export async function POST(request: Request) {
   } catch (error) {
     // 404 error -> guild is not on the database. Attempt to add it
     if (error.status == 404) {
-      console.log(
-        "[DEBUG] Guild is not in the database. Attempting to add it..."
-      );
-      const guildData = { discordID: guildID };
-      try {
-        const newGuild = await pb.collection("guilds").create(guildData);
-        console.log("[DEBUG] Guild has been added to the database");
-      } catch (error) {
-        console.log(`\n[DEBUG] Failed to create new guild: \n${error}`);
-      }
+      registerGuild(guildID);
     } else {
       console.log(
         `\n[DEBUG] Failed to communicate with the Database: \n${error}`
@@ -84,59 +76,62 @@ export async function GET(
   const { id } = await params;
   console.log(id);
 
-  const guild = await pb
-    .collection("guilds")
-    .getFirstListItem(`discordID=${id}`, {});
-
-  console.log(guild.id);
-
   try {
+    const guild = await pb
+      .collection("guilds")
+      .getFirstListItem(`discordID=${id}`, {});
 
-    // TODO Fetch the timezones correctly
+    console.log(guild.id);
 
-    // you can also fetch all records at once via getFullList
-    const records = await pb.collection("messages").getFullList({
-      filter: `guild_id ?= "${guild.id}"`,
-      sort: "-created",
-      expand: "created",
-    });
+    try {
+      // TODO Fetch the timezones correctly
 
-    const dataArray = [];
-
-    let i = 0
-    while (i < 25) {
-      if (i < 10) {
-        dataArray.push({hour: `0${i}`, amount: 0})
-      } else {
-        dataArray.push({hour: `${i}`, amount: 0})
-      }
-      
-      i = i + 1
-    }
-
-    console.log(records)
-
-    records.forEach(record => {
-      let minutes = [record.created.slice(11, 13)]
-      minutes.forEach(minute => {
-        // console.log(minute)
-        let position = dataArray.findIndex((item) => item.hour === minute)
-        if (position != -1) {
-          dataArray[position].amount = dataArray[position].amount + 1
-        } else {
-          dataArray.push({hour: minute, amount: 1})
-        }
-        // console.log(position)
+      // you can also fetch all records at once via getFullList
+      const records = await pb.collection("messages").getFullList({
+        filter: `guild_id ?= "${guild.id}"`,
+        sort: "-created",
+        expand: "created",
       });
-      // console.log(minutes)
 
-      
-    });
-    dataArray.sort((a, b) => a.hour - b.hour)
-    console.log(dataArray)
+      const dataArray = [];
 
-    return Response.json({ dataArray });
+      let i = 0;
+      while (i < 25) {
+        if (i < 10) {
+          dataArray.push({ hour: `0${i}`, amount: 0 });
+        } else {
+          dataArray.push({ hour: `${i}`, amount: 0 });
+        }
+
+        i = i + 1;
+      }
+
+      console.log(records);
+
+      records.forEach((record) => {
+        let minutes = [record.created.slice(11, 13)];
+        minutes.forEach((minute) => {
+          // console.log(minute)
+          let position = dataArray.findIndex((item) => item.hour === minute);
+          if (position != -1) {
+            dataArray[position].amount = dataArray[position].amount + 1;
+          } else {
+            dataArray.push({ hour: minute, amount: 1 });
+          }
+          // console.log(position)
+        });
+        // console.log(minutes)
+      });
+      dataArray.sort((a, b) => a.hour - b.hour);
+      console.log(dataArray);
+      return Response.json({ dataArray });
+    } catch (err) {
+      console.log(err);
+    }
   } catch (err) {
-    console.log(err);
+    if (err.status == 400) {
+      let notFound = [{ errorCode: 404 }];
+      return Response.json({ notFound });
+    }
   }
 }

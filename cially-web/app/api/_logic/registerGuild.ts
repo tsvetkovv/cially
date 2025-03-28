@@ -1,0 +1,22 @@
+// Imports
+import PocketBase from "pocketbase";
+
+// Initialize Pocketbase URL
+const url = process.env.POCKETBASE_URL;
+
+// Pocketbase Initialization
+const pb = new PocketBase(url);
+
+
+export default async function registerGuild(guildID) {
+    console.log(
+        "[DEBUG] Guild is not in the database. Attempting to add it..."
+      );
+      const guildData = { discordID: guildID };
+      try {
+        const newGuild = await pb.collection("guilds").create(guildData);
+        console.log("[DEBUG] Guild has been added to the database");
+      } catch (error) {
+        console.log(`\n[DEBUG] Failed to create new guild: \n${error}`);
+      }
+}
