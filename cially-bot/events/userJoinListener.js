@@ -1,0 +1,18 @@
+// Imports
+const { Events } = require("discord.js");
+const cfonts = require("cfonts");
+const { debug } = require('../terminal/debug');
+const { error } = require('../terminal/error');
+const { sendPostRequest } = require('../http/postRequest');
+
+// Main Event
+module.exports = {
+  name: Events.GuildMemberAdd,
+  execute(member) {
+
+    // Logs
+    debug({text: `User Joined: \nGuild: ${member.guild.name}, ${member.guild.id}, Members: ${member.guild.memberCount}\nMember: ${member.id}, ${member.displayName}`});
+    let info = {"guildID": member.guild.id, "memberID": member.id, "memberCount": member.guild.memberCount}
+    sendPostRequest({data: info, guildId: member.guild.id, type: module.exports.name})
+  },
+};
