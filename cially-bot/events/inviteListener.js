@@ -13,7 +13,7 @@ module.exports = {
     // Logs
     debug({text: `New Invite: \nGuild: ${invite.guild.name}, ${invite.guild}\nChannel: ${invite.channel.name}, ${invite.channelId}\n`});
 
-    let info = {"guildID": invite.guild, "channelID": invite.channelId}
+    let info = {"guildID": invite.guild.id, "channelID": invite.channelId}
     sendPostRequest({data: info, guildId: invite.guild.id, type: module.exports.name})
   },
 };

@@ -13,7 +13,7 @@ export default function DataDashboard() {
   useEffect(() => {
     async function fetchData() {
       let chartDataReceived = await fetch(
-        `http://localhost:3000/api/server/${guildID}`
+        `http://localhost:3000/api/server/${guildID}/messageCreate`
       );
       let json = await chartDataReceived.json();
       setChartData(json);

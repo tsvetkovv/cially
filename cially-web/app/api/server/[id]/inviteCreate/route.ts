@@ -1,25 +1,25 @@
-// Imports
-import PocketBase from "pocketbase";
-import registerGuild from "../../_logic/registerGuild";
+//TODO add a dynamic way to detect post requests for different listeners
 
-// Initialize Pocketbase URL
-const url = process.env.POCKETBASE_URL;
+import PocketBase from "pocketbase";
+import registerGuild from "../../../_logic/registerGuild";
 
 // Pocketbase Initialization
+const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 
-// Main Event
+
+// POST Event
 export async function POST(request: Request) {
-  //TODO add a dynamic way to detect post requests for different listeners
 
   // Parse the request body and debug it
   const body = await request.json();
-  const { guildID, messageID, messageLength, channelID, authorID } = body;
+  const { guildID, channelID } = body;
+
   console.log(`[DEBUG] New POST Request: \n${JSON.stringify(body)}`);
 
-  // Respond to the request. Be kind and don't leave my boy Discord Bot on seen :)
+  // Response to the request. Be kind and don't leave my boy Discord Bot on seen :)
   const roger = {
-    response: `Message Received with the following details: GI: ${guildID}, MI: ${messageID}`,
+    response: `Message Received with the following details: GI: ${guildID}`,
   };
 
   // Database Logic
@@ -29,24 +29,20 @@ export async function POST(request: Request) {
       .getFirstListItem(`discordID=${guildID}`, {});
     console.log("[DEBUG] Guild has been found and is ready to add data to it");
 
-    // FIXME Multiple messages dont get tracked
 
     try {
-      const messageData = {
-        author: authorID,
-        guild_id: guild.id,
+      const itemData = {
+        guildID: guild.id,
         channelID: channelID,
-        messageLength: messageLength,
       };
-      const newMessage = await pb.collection("messages").create(messageData);
+      const newInvite = await pb.collection("invites").create(itemData);
       console.log(
-        `[DEBUG] Message has been added in the database. ID: ${messageID}`
+        `[DEBUG] Invite has been added in the database.`
       );
     } catch (error) {
       console.log(error);
     }
 
-    // Add the guild to the database
   } catch (error) {
     // 404 error -> guild is not on the database. Attempt to add it
     if (error.status == 404) {
@@ -55,7 +51,7 @@ export async function POST(request: Request) {
       console.log(
         `\n[DEBUG] Failed to communicate with the Database: \n${error}`
       );
-      console.log(`[DEBUG] Error Code: ${error.status}`);
+      console.log(`[ERROR] Error Code: ${error.status}`);
     }
   }
 
@@ -74,21 +70,18 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  console.log(id);
 
   try {
     const guild = await pb
       .collection("guilds")
       .getFirstListItem(`discordID=${id}`, {});
 
-    console.log(guild.id);
-
     try {
       // TODO Fetch the timezones correctly
 
       // you can also fetch all records at once via getFullList
-      const records = await pb.collection("messages").getFullList({
-        filter: `guild_id ?= "${guild.id}"`,
+      const records = await pb.collection("invites").getFullList({
+        filter: `guildID ?= "${guild.id}"`,
         sort: "-created",
         expand: "created",
       });
@@ -106,24 +99,19 @@ export async function GET(
         i = i + 1;
       }
 
-      console.log(records);
 
       records.forEach((record) => {
         let minutes = [record.created.slice(11, 13)];
         minutes.forEach((minute) => {
-          // console.log(minute)
           let position = dataArray.findIndex((item) => item.hour === minute);
           if (position != -1) {
             dataArray[position].amount = dataArray[position].amount + 1;
           } else {
             dataArray.push({ hour: minute, amount: 1 });
           }
-          // console.log(position)
         });
-        // console.log(minutes)
       });
       dataArray.sort((a, b) => a.hour - b.hour);
-      console.log(dataArray);
       return Response.json({ dataArray });
     } catch (err) {
       console.log(err);
