@@ -7,6 +7,7 @@ import registerGuild from "../../../_logic/registerGuild";
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 
+let collection_name = "invites"
 
 // POST Event
 export async function POST(request: Request) {
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
         guildID: guild.id,
         channelID: channelID,
       };
-      const newInvite = await pb.collection("invites").create(itemData);
+      const newInvite = await pb.collection(collection_name).create(itemData);
       console.log(
         `[DEBUG] Invite has been added in the database.`
       );
@@ -80,7 +81,7 @@ export async function GET(
       // TODO Fetch the timezones correctly
 
       // you can also fetch all records at once via getFullList
-      const records = await pb.collection("invites").getFullList({
+      const records = await pb.collection(collection_name).getFullList({
         filter: `guildID ?= "${guild.id}"`,
         sort: "-created",
         expand: "created",

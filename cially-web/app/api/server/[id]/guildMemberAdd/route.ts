@@ -7,20 +7,20 @@ import registerGuild from "../../../_logic/registerGuild";
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 
-let collection_name = "messages"
+let collection_name = "member_joins"
 
 // POST Event
 export async function POST(request: Request) {
 
   // Parse the request body and debug it
   const body = await request.json();
-  const { guildID, messageID, messageLength, channelID, authorID } = body;
+  const { guildID, memberID, memberCount } = body;
 
   console.log(`[DEBUG] New POST Request: \n${JSON.stringify(body)}`);
 
   // Response to the request. Be kind and don't leave my boy Discord Bot on seen :)
   const roger = {
-    response: `Message Received with the following details: GI: ${guildID}, MI: ${messageID}`,
+    response: `Message Received with the following details: GI: ${guildID}`,
   };
 
   // Database Logic
@@ -30,18 +30,15 @@ export async function POST(request: Request) {
       .getFirstListItem(`discordID=${guildID}`, {});
     console.log("[DEBUG] Guild has been found and is ready to add data to it");
 
-    // FIXME Multiple messages dont get tracked
 
     try {
       const itemData = {
-        author: authorID,
         guildID: guild.id,
-        channelID: channelID,
-        messageLength: messageLength,
+        memberID: memberID,
       };
-      const newMessage = await pb.collection(collection_name).create(itemData);
+      const newInvite = await pb.collection(collection_name).create(itemData);
       console.log(
-        `[DEBUG] Message has been added in the database. ID: ${messageID}`
+        `[DEBUG] Member Addition has been added in the database.`
       );
     } catch (error) {
       console.log(error);
