@@ -1,5 +1,3 @@
-//TODO add a dynamic way to detect post requests for different listeners
-
 import PocketBase from "pocketbase";
 import registerGuild from "../../../_logic/registerGuild";
 

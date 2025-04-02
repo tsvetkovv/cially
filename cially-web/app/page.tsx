@@ -27,11 +27,11 @@ import { z } from "zod";
 
 const formSchema = z.object({
   guildID: z.string().min(2).max(50),
+  
 });
 
 export default function Home() {
   const router = useRouter()
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,7 +41,7 @@ export default function Home() {
   
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    router.push(`/dashboard/?guildID=${values.guildID}`)
+    router.push(`/guild/?guildID=${values.guildID}`)
   }
 
   return (
