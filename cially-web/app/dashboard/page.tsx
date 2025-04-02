@@ -3,7 +3,8 @@
 import { MessageChart } from "@/app/_components/chart-preview";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-
+import LoadingSVG from "../_components/loading-page";
+import GuildNotFound from "../_components/guildNotFound";
 
 export default function DataDashboard() {
   const searchParams = useSearchParams();
@@ -23,14 +24,16 @@ export default function DataDashboard() {
   }, []);
 
   if (chartData.notFound) {
-    return <>Guild not found</>;
+    return <GuildNotFound />
   } else if (!chartData.dataArray) {
-    return <>Loading</>;
+    return <LoadingSVG />
   } else {
     return (
       <>
-        <MessageChart chartData={chartData.dataArray} />
+        {<MessageChart chartData={chartData.dataArray} />}
       </>
     );
+    
   }
+
 }

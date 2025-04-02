@@ -38,18 +38,18 @@ export default function Home() {
       guildID: "",
     },
   });
-
-  // 2. Define a submit handler.
+  
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
     router.push(`/dashboard/?guildID=${values.guildID}`)
   }
 
   return (
     <>
-      <Card className="mt-20 mx-10">
+    <div className="w-40 place-self-center">
+      <img src="/logo-png.png"></img>
+      </div>
+      <Card className="mt-2 mx-10">
         <CardHeader>
           <CardTitle className="text-3xl text-center">Cially</CardTitle>
           <CardDescription className="text-center">
