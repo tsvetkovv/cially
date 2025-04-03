@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+
+body {
+  font-family: 'Outfit', Aral;
+  margin: 0;
+  padding: 0;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -73,9 +80,9 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222.2 34% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 40% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
@@ -153,4 +160,10 @@
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+.outfit {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
