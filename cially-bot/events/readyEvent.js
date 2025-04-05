@@ -16,12 +16,12 @@ module.exports = {
     // Cool Console Title :P (serves no point at all)
     cfonts.say("CIALLY", {
       font: "block",
-      align: "center", // define text alignment
-      colors: ["blue"], // define all colors
-      background: "transparent", // define the background color, you can also use `backgroundColor` here as key
-      letterSpacing: 1, // define letter spacing
-      lineHeight: 1, // define the line height
-      space: true, // define if the output text should have empty lines on top and on the bottom
+      align: "center", 
+      colors: ["blue"], 
+      background: "transparent", 
+      letterSpacing: 1, 
+      lineHeight: 1, 
+      space: true, 
       env: "node",
     });
 
@@ -32,7 +32,7 @@ module.exports = {
         `The Bot is Running! \n\n-----------LOGS------------\n\n`
     );
     
-    // Initial sync of commands
+    // Sync of slash commands
     syncCommands(client);
     
   },

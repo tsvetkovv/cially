@@ -8,7 +8,7 @@ const { error } = require('../../terminal/error');
 const PocketBase = require('pocketbase/cjs')
 const url = process.env.POCKETBASE_URL
 const pb = new PocketBase(url);
-const guild_collection_name = "guilds"
+const guild_collection_name = process.env.GUILD_COLLECTION
 
 
 module.exports = {
@@ -16,9 +16,6 @@ module.exports = {
 		.setName('fetch')
 		.setDescription('command description'),
 	async execute(interaction) {
-
-
-        //updatePendingGuilds();
 
         debug({ text: `Searching for fetch requests...` });
     try {

@@ -1,12 +1,3 @@
-/* 
-Welcome to my Discord Bot Code!
-
-I like comments, so there is a pretty good explanation
- throughout the whole code!
-
-Please consdider leaving a star on GitHub ⭐
-*/
-
 // Package Imports
 const fs = require("node:fs");
 const path = require("node:path");
@@ -24,7 +15,6 @@ const clientId = process.env.CLIENT_ID;
 const client = new Client({
   intents: 53608447,
 });
-
 
 
 // Command Handler
@@ -66,5 +56,5 @@ for (const file of eventFiles) {
   }
 }
 
-// Log in to Discord with your client's token
+// Log in to Discord with client's token
 client.login(token);

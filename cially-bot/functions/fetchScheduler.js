@@ -1,12 +1,15 @@
-const PocketBase = require('pocketbase/cjs')
-const url = process.env.POCKETBASE_URL
-const pb = new PocketBase(url);
+// Currently moved to /commands/fetch/fetch.js
+
+/* 
 const { debug } = require('.././terminal/debug');
 const { error } = require('.././terminal/error');
-const guild_collection_name = "guilds"
+const PocketBase = require('pocketbase/cjs')
+
+const url = process.env.POCKETBASE_URL
+const pb = new PocketBase(url);
+const guild_collection_name = process.env.GUILD_COLLECTION
 
 async function updatePendingGuilds() {
-    // if (fetch_status == true) {
 
     debug({ text: `Searching for fetch requests...` });
     try {
@@ -28,3 +31,4 @@ async function updatePendingGuilds() {
 }
 
 module.exports = { updatePendingGuilds };
+ */
