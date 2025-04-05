@@ -22,7 +22,7 @@ const clientId = process.env.CLIENT_ID;
 // TODO Currently added every single intent. Planning to fix once I have a final version of the code
 // Using https://discord-intents-calculator.vercel.app/ to generate the intents ID
 const client = new Client({
-  intents: 53608447
+  intents: 53608447,
 });
 
 
