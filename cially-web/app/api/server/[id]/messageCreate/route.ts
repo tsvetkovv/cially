@@ -7,7 +7,9 @@ import registerGuild from "../../../_logic/registerGuild";
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 
-let collection_name = "messages"
+let collection_name = process.env.MESSAGE_COLLECTION
+let guild_collection_name = process.env.GUILDS_COLLECTION
+
 
 // POST Event
 export async function POST(request: Request) {
@@ -26,8 +28,8 @@ export async function POST(request: Request) {
   // Database Logic
   try {
     const guild = await pb
-      .collection("guilds")
-      .getFirstListItem(`discordID=${guildID}`, {});
+      .collection(guild_collection_name)
+      .getFirstListItem(`discordID='${guildID}'`, {});
     console.log("[DEBUG] Guild has been found and is ready to add data to it");
 
     // FIXME Multiple messages dont get tracked
@@ -77,7 +79,7 @@ export async function GET(
 
   try {
     const guild = await pb
-      .collection("guilds")
+      .collection(guild_collection_name)
       .getFirstListItem(`discordID=${id}`, {});
 
     try {
