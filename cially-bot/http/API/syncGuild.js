@@ -34,12 +34,10 @@ async function API(client) {
                 let channels = Guild.channels.cache.size;
                 let roles = Guild.roles.cache.size;
                 let bans = Guild.bans.cache.size;
-
                 let owner = await Guild.fetchOwner();
 
                 debug({ text: `Syncing Guild: ${Guild.name}, ${Guild.id}` });
                 const newData = {
-                  pending_fetch: false,
                   name: Guild.name,
                   members: Guild.memberCount,
                   available: Guild.available,
