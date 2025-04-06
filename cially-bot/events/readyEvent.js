@@ -7,6 +7,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const fs = require('fs');
 const path = require('path');
+const { API } = require('../http/API/syncGuild')
 
 // Main Event
 module.exports = {
@@ -34,6 +35,9 @@ module.exports = {
     
     // Sync of slash commands
     syncCommands(client);
+
+    // Start the API
+    API(client);
     
   },
 };
