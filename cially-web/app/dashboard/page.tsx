@@ -16,7 +16,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default async function Dashboard() {
+export default async function Dashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const guildID = (await searchParams).guildID
+
+ 
+  //TODO change to dynamic fetch
+  let API_REQ = await fetch(`http://localhost:3000/api/server/${guildID}/fetchGuild`)
+  let data = await API_REQ.json()
+  let guild = data.guildFound[0]
   return (
     <>
       <div className="grid grid-rows-3 ml-10 mt-10 min-w-dvh mr-4">
@@ -25,7 +36,7 @@ export default async function Dashboard() {
             <div className="col-span-2 text-4xl ">
               Good Evening!
               <div className="text-gray-400 text-xs font-normal mt-2">
-                Currently viewing Guild Name
+                Currently viewing { guild.name }
               </div>
             </div>
             <div className="col-start-4 col-span-2 mr-4">
@@ -36,7 +47,7 @@ export default async function Dashboard() {
                     Current Members
                   </CardTitle>
                   <CardDescription className="text-gray-300 text-2xl">
-                    999
+                    {guild.members}
                     <div className="text-xs mt-2 text-red-400">
                       -5 than yesterday
                     </div>
@@ -73,16 +84,16 @@ export default async function Dashboard() {
 
             <div className="col-span-2 grid grid-rows-2">
               <div>
-                <div className="text-2xl">Guild Name</div>
+                <div className="text-2xl">{guild.name}</div>
                 <div className="text-gray-400 text-xs">
                   This is the Guild Description
                 </div>
               </div>
               <div className="">
-                Members: 999<br></br>
+                Members: {guild.members}<br></br>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>Available: Yes</TooltipTrigger>
+                    <TooltipTrigger>Available: {guild.available}</TooltipTrigger>
                     <TooltipContent>
                       <p>
                         If a server is not available, it means it’s down or in
@@ -94,7 +105,7 @@ export default async function Dashboard() {
                 <br></br>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>Partnered: No</TooltipTrigger>
+                    <TooltipTrigger>Partnered: {guild.discord_partner}</TooltipTrigger>
                     <TooltipContent>
                       <p>
                         Shows if the server belongs to the Discord Partner
@@ -104,7 +115,7 @@ export default async function Dashboard() {
                   </Tooltip>
                 </TooltipProvider>
                 <br></br>
-                Created: Tue, 8 March 2025
+                Created: {guild.creation_date}
               </div>
             </div>
 
@@ -115,11 +126,11 @@ export default async function Dashboard() {
                 </div>
               </div>
               <div className="">
-                Channels: 17<br></br>
-                Roles: 19
+                Channels: {guild.channels}<br></br>
+                Roles: {guild.roles}
                 <br></br>
-                Bans: 42<br></br>
-                Owner: skellgreco
+                Bans: {guild.bans}<br></br>
+                Owner: {guild.owner_username}
               </div>
             </div>
           </Card>

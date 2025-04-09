@@ -12,7 +12,10 @@ const guild_collection_name = process.env.GUILD_COLLECTION;
 async function API(client) {
   app.get("/syncGuild/:guildID", (req, res) => {
     // TODO add ratelimits
-
+    
+    let success_message = { code: "success" }
+    let error_message = { code: "error" }
+    
     let guildID = req.params.guildID;
 
     debug({ text: `Syncronization Request Received for Guild ID: ${guildID}` });
@@ -35,6 +38,8 @@ async function API(client) {
                 let roles = Guild.roles.cache.size;
                 let bans = Guild.bans.cache.size;
                 let owner = await Guild.fetchOwner();
+                let icon_url = await Guild.iconURL
+                console.log(icon_url)
 
                 debug({ text: `Syncing Guild: ${Guild.name}, ${Guild.id}` });
                 const newData = {
@@ -47,6 +52,7 @@ async function API(client) {
                   bans: bans,
                   creation_date: Guild.createdAt,
                   owner_username: owner.user.username,
+                  icon_url: icon_url
                 };
                 const updatedRecord = await pb
                   .collection("guilds")
@@ -55,12 +61,12 @@ async function API(client) {
               }
               try {
                 setNewData();
-                res.send("succesfull_sync");
+                res.send(success_message);
               } catch (err) {
                 error({
                   text: `Failed to sync data for GuildID: ${Guild.id}\n${error}`,
                 });
-                res.send("error");
+                res.send(error_message);
               }
             }
           });
@@ -68,14 +74,14 @@ async function API(client) {
           debug({
             text: `Failed to fetch guild with ID: ${guildID}`,
           });
-          res.send("error");
+          res.send(error_message);
         }
       }
       fetchGuilds();
     } catch (err) {
       console.log(err);
       error({ text: `Failed to communicate with the Database` });
-      res.send("error");
+      res.send(error_message);
     }
   });
 

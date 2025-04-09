@@ -17,7 +17,7 @@ export default async function registerGuild(guildID) {
       try {
         const newGuild = await pb.collection(guild_collection_name).create(guildData);
         console.log("[DEBUG] Guild has been added to the database");
-        fetch(`http://localhost:6969/syncGuild/${guildID}`)
+        fetch(`${process.env.BOT_API_URL}/syncGuild/${guildID}`)
       } catch (error) {
         console.log(`\n[DEBUG] Failed to create new guild: \n${error}`);
       }
