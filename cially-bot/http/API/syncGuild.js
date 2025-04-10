@@ -22,6 +22,7 @@ async function API(client) {
 
     try {
       async function fetchGuilds() {
+        try {
         const guilds = await pb.collection(guild_collection_name).getFullList({
           filter: `discordID ?= '${guildID}'`,
         });
@@ -52,12 +53,17 @@ async function API(client) {
                   bans: bans,
                   creation_date: Guild.createdAt,
                   owner_username: owner.user.username,
-                  icon_url: icon_url
+                  // icon_url: icon_url
                 };
-                const updatedRecord = await pb
+                try {
+
+                  const updatedRecord = await pb
                   .collection("guilds")
                   .update(`${guild.id}`, newData);
-                debug({ text: `Guild got synced: ${Guild.name}, ${Guild.id}` });
+                  debug({ text: `Guild got synced: ${Guild.name}, ${Guild.id}` });
+                } catch (err) {
+                  error({ text: `Failed to push new data: \n${err}` });
+                }
               }
               try {
                 setNewData();
@@ -76,6 +82,10 @@ async function API(client) {
           });
           res.send(error_message);
         }
+      } catch (err) {
+        error({ text: `Failed to fetch guild: \n${err}` });
+  
+      }
       }
       fetchGuilds();
     } catch (err) {

@@ -13,7 +13,7 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    let API_REQ = await fetch(`${process.env.BOT_API_URL}/syncGuild/${id}`);
+    let API_REQ = await fetch(`${process.env.BOT_API_URL}/syncGuild/${id}`)
     let data = await API_REQ.json();
     let code = data.code;
 
