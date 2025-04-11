@@ -1,16 +1,14 @@
-const express = require("express");
-const app = express();
-const port = process.env.PORT;
-const { debug } = require("../../terminal/debug");
-const { error } = require("../../terminal/error");
+const { debug } = require("../../../terminal/debug");
+const { error } = require("../../../terminal/error");
 
 const PocketBase = require("pocketbase/cjs");
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 const guild_collection_name = process.env.GUILD_COLLECTION;
+const { registerGuild } = require("./logic/registerGuild")
 
-async function API(client) {
-  app.get("/syncGuild/:guildID", (req, res) => {
+
+async function syncGuild(req, res, client) {
     // TODO add ratelimits
     
     let success_message = { code: "success" }
@@ -70,7 +68,7 @@ async function API(client) {
                 res.send(success_message);
               } catch (err) {
                 error({
-                  text: `Failed to sync data for GuildID: ${Guild.id}\n${error}`,
+                  text: `Failed to sync data for GuildID: ${Guild.id}\n${err}`,
                 });
                 res.send(error_message);
               }
@@ -93,11 +91,6 @@ async function API(client) {
       error({ text: `Failed to communicate with the Database` });
       res.send(error_message);
     }
-  });
-
-  app.listen(port, () => {
-    console.log(`[SUCCESS] `.green + `The API is running on port: ${port}! \n`);
-  });
 }
 
-module.exports = { API };
+module.exports = { syncGuild }

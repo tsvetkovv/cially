@@ -9,62 +9,6 @@ let collection_name = process.env.INVITE_COLLECTION
 let guild_collection_name = process.env.GUILDS_COLLECTION
 
 
-// POST Event
-export async function POST(request: Request) {
-
-  // Parse the request body and debug it
-  const body = await request.json();
-  const { guildID, channelID } = body;
-
-  console.log(`[DEBUG] New POST Request: \n${JSON.stringify(body)}`);
-
-  // Response to the request. Be kind and don't leave my boy Discord Bot on seen :)
-  const roger = {
-    response: `Message Received with the following details: GI: ${guildID}`,
-  };
-
-  // Database Logic
-  try {
-    const guild = await pb
-      .collection(guild_collection_name)
-      .getFirstListItem(`discordID='${guildID}'`, {});
-    console.log("[DEBUG] Guild has been found and is ready to add data to it");
-
-
-    try {
-      const itemData = {
-        guildID: guild.id,
-        channelID: channelID,
-      };
-      const newInvite = await pb.collection(collection_name).create(itemData);
-      console.log(
-        `[DEBUG] Invite has been added in the database.`
-      );
-    } catch (error) {
-      console.log(error);
-    }
-
-  } catch (error) {
-    // 404 error -> guild is not on the database. Attempt to add it
-    if (error.status == 404) {
-      registerGuild(guildID);
-    } else {
-      console.log(
-        `\n[DEBUG] Failed to communicate with the Database: \n${error}`
-      );
-      console.log(`[ERROR] Error Code: ${error.status}`);
-    }
-  }
-
-  console.log(
-    `[DEBUG] End of logic. Stopping the communication and returning a response to the Bot`
-  );
-  return new Response(JSON.stringify(roger), {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
 // Main GET Event
 export async function GET(
   request: Request,

@@ -21,8 +21,11 @@ function sendPostRequest({ data, guildId, type }) {
 
     // Load request options through event parameters
     const opts = {
-      url: `${API_URL}/server/${guildId}/${type}`,
+      url: `${API_URL}/${type}/${guildId}/`,
       body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
     };
 
     // HTTP Request
