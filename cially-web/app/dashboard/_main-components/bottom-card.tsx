@@ -21,6 +21,9 @@ export default function BottomCard({guild}) {
     let correct_date = guild.creation_date.slice(0, 4) + "/" + guild.creation_date.slice(5, 7) + "/" + guild.creation_date.slice(11, 13)
     let correct_available = (guild.available == "true") ? "Yes" : "No"
     let partner_correct = (guild.discord_partner == "true") ? "Yes" : "No"
+    let correct_description = (guild.description) ? guild.description : "No Description"
+    let correct_vanity_url = (guild.vanity_url) ? `discord.gg/${guild.vanity_url}` : "No Vanity URL"
+    let correct_vanity_uses = (guild.vanity_uses) ? (guild.vanity_uses != -1) ? guild.vanity_uses : "No Permissions to View" : '-'
     
 
     return (
@@ -28,7 +31,7 @@ export default function BottomCard({guild}) {
         <Card className="grid grid-cols-5 mt-10 px-10 min-w-dvh">
             <div className="col-span-1 col-start-1 w-20 h-20">
               <Avatar className=" w-20 h-20">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={guild.icon_url} />
                 <AvatarFallback>Guild</AvatarFallback>
               </Avatar>
             </div>
@@ -37,7 +40,7 @@ export default function BottomCard({guild}) {
               <div>
                 <div className="text-2xl">{guild.name}</div>
                 <div className="text-gray-400 text-xs">
-                  This is the Guild Description
+                  {correct_description}
                 </div>
               </div>
               <div className="">
@@ -66,7 +69,8 @@ export default function BottomCard({guild}) {
                   </Tooltip>
                 </TooltipProvider>
                 <br></br>
-                Created: {correct_date}
+                Created: {correct_date}<br></br>
+                Owner: {guild.owner_username}
               </div>
             </div>
 
@@ -81,7 +85,8 @@ export default function BottomCard({guild}) {
                 Roles: {guild.roles}
                 <br></br>
                 Bans: {guild.bans}<br></br>
-                Owner: {guild.owner_username}
+                Vanity URL: {correct_vanity_url}<br></br>
+                Vanity Uses: {correct_vanity_uses}
               </div>
             </div>
           </Card>

@@ -9,30 +9,18 @@ export default async function Dashboard({
 }) {
   const guildID = (await searchParams).guildID;
 
-  //TODO change to dynamic fetch
+  //TODO change to dynamic 
 
-  // CURRENTLY DISABLED DUE TO MULTIPLE FETCH REQUESTS DURING TESTING
-  let API_REQ = await fetch(`http://localhost:3000/api/server/${guildID}/fetchGuild`)
+  // TODO make the cards green and red messages work
+
+  let API_REQ = await fetch(`http://localhost:3000/api/server/${guildID}/fetchGuild`, { next: { revalidate: 30 } })
   let data = await API_REQ.json()
-/* 
-  let data = {
-    guildFound: [
-      {
-        discordID: "1247194176638947389",
-        name: "Σκελλινό Μαγειρείο",
-        members: 5,
-        available: "true",
-        discord_partner: "false",
-        creation_date: "2024-06-03T14:24:23.458Z",
-        channels: 11,
-        roles: 5,
-        bans: 0,
-        owner_username: "skellgreco",
-      },
-    ],
-  }; */
+
 
   let guild = data.guildFound[0];
+  const date = new Date();
+  let new_date = date.toLocaleString('en-US')
+  let welcome_message = (String(new_date).includes('AM')) ? "Good Morning" : "Good Evening"
 
   return (
     <>
@@ -40,7 +28,7 @@ export default async function Dashboard({
         <div>
           <div className="grid grid-cols-8 rows-span-1">
             <div className="col-span-2 text-4xl ">
-              Good Evening!
+              {welcome_message}
               <div className="text-gray-400 text-xs font-normal mt-2">
                 Currently viewing {guild.name}
               </div>
@@ -57,7 +45,7 @@ export default async function Dashboard({
         <div className="row-span-3">
           <BottomCard guild={guild} />
         </div>
-        <div className="text-center mt-10 text-xs text-gray-600">
+        <div className="text-center mt-5 text-xs text-gray-600">
           Thanks for using Cially Dashboard!
         </div>
       </div>

@@ -22,7 +22,6 @@ export async function GET(
       .getFirstListItem(`discordID=${id}`, {});
 
     try {
-      // TODO Fetch the timezones correctly
 
       // you can also fetch all records at once via getFullList
       const records = await pb.collection(collection_name).getFullList({

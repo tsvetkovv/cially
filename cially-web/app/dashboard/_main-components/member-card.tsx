@@ -21,7 +21,7 @@ export default function MemberBlock({guild}) {
                   <CardDescription className="text-gray-300 text-2xl">
                     {guild.members}
                     <div className="text-xs mt-2 text-red-400">
-                      -5 than yesterday
+                      {/* -5 than yesterday */}
                     </div>
                   </CardDescription>
                 </CardHeader>
