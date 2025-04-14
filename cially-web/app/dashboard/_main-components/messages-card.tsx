@@ -9,7 +9,7 @@ import {
 import { UsersRound, MessageCircle } from "lucide-react";
 
 export default function MessagesBlock({ guild }) {
-  // let correct_msg = (guild.today_msg > 0) ? guild.today_msg : '0'
+  // let correct_msg_difference = (guild.msg_day_difference > 0) ? `+${guild.msg_day_difference} messages than yesterday`
 
   return (
     <>
@@ -21,8 +21,8 @@ export default function MessagesBlock({ guild }) {
           </CardTitle>
           <CardDescription className="text-gray-300 text-2xl">
             {guild.today_msg}
-            <div className="text-xs mt-2 text-green-400">
-              {/* +20% than yesterday */}
+            <div className="text-xs mt-2">
+              { (guild.msg_day_difference > 0) ? <div className="text-green-400">+{guild.msg_day_difference} than yesterday</div> : (guild.msg_day_difference != 0) ? <div className="text-red-400">{guild.msg_day_difference} than yesterday</div> : <div className="text-gray-400">+{guild.msg_day_difference} than yesterday</div> }
             </div>
           </CardDescription>
         </CardHeader>

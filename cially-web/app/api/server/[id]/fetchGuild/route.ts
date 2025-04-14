@@ -19,6 +19,8 @@ export async function GET(
     let data = await API_REQ.json();
     let code = data.code;
     let date = `${new Date().getUTCFullYear()}-${(new Date().getUTCMonth() + 1).toString().padStart(2, "0")}-${(new Date().getUTCDate()).toString().padStart(2, "0")}`
+    let previous_date = `${new Date().getUTCFullYear()}-${(new Date().getUTCMonth() + 1).toString().padStart(2, "0")}-${(new Date().getUTCDate()-1).toString().padStart(2, "0")}`
+
 
     if (code == "success") {
       try {
@@ -30,6 +32,13 @@ export async function GET(
           filter: `guildID ?= "${guild.id}" && created>'${date}'`,
           sort: "created",
         });
+
+        const yesterday_msg_records = await pb.collection(message_collection_name).getFullList({
+          filter: `guildID ?= "${guild.id}" && created>'${previous_date}' && created<'${date}'`,
+          sort: "created",
+        });
+        
+        let msg_day_difference = today_msg_records.length - yesterday_msg_records.length
 
         let guildFound = [{
           discordID: guild.discordID,
@@ -46,7 +55,8 @@ export async function GET(
           description: guild.description, 
           vanity_url: guild.vanity_url, 
           vanity_uses: guild.vanity_uses, 
-          today_msg: today_msg_records.length
+          today_msg: today_msg_records.length,
+          msg_day_difference: msg_day_difference
         }];
         return Response.json({ guildFound });
 

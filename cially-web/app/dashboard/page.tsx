@@ -1,6 +1,7 @@
 import BottomCard from "./_main-components/bottom-card";
 import MemberBlock from "./_main-components/member-card";
 import MessagesBlock from "./_main-components/messages-card";
+let WEBSITE_URL = process.env.WEBSITE_URL
 
 export default async function Dashboard({
   searchParams,
@@ -9,11 +10,10 @@ export default async function Dashboard({
 }) {
   const guildID = (await searchParams).guildID;
 
-  //TODO change to dynamic 
+  // TODO notification wih memory to let the user know that the data is not of all time
 
-  // TODO make the cards green and red messages work
 
-  let API_REQ = await fetch(`http://localhost:3000/api/server/${guildID}/fetchGuild`, { next: { revalidate: 30 } })
+  let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`, { next: { revalidate: 30 } })
   let data = await API_REQ.json()
 
 
