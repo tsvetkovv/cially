@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, Home, Inbox, Search, MessageSquare, ChartLine } from "lucide-react"
+import { Calendar, Home, Inbox, ChartLine } from "lucide-react"
 
 import {
   Sidebar,
@@ -26,17 +26,17 @@ export function AppSidebar() {
   const items = [
     {
       title: "General",
-      url: `dashboard?guildID=${guildID}`,
+      url: `/dashboard?guildID=${guildID}`,
       icon: Home,
     },
     {
-      title: "Messages",
-      url: `dashboard/messages?guildID=${guildID}`,
+      title: "Messages & Activity",
+      url: `/dashboard/messages?guildID=${guildID}`,
       icon: Inbox,
     },
     {
       title: "Growth",
-      url: `dashboard/growth?guildID=${guildID}`,
+      url: `/dashboard/growth?guildID=${guildID}`,
       icon: ChartLine,
     },
   ]

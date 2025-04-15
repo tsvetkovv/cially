@@ -8,6 +8,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main>
         <SidebarTrigger className="sm:hidden"/>
         {children}
+        <div className="text-center mt-5 text-xs text-gray-600 pb-5">
+          Thanks for using Cially Dashboard!
+        </div>
       </main>
     </SidebarProvider>
   )

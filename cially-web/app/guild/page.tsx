@@ -14,11 +14,12 @@ export default function DataDashboard() {
   
   useEffect(() => {
     async function fetchData() {
-      let chartDataReceived = await fetch(
+      /* let chartDataReceived = await fetch(
         `http://localhost:3000/api/server/${guildID}/fetchGuild`
       );
       let json = await chartDataReceived.json();
-      setChartData(json);
+      setChartData(json); */
+      setChartData({ guildFound: { guildFound: 69 }})
     }
     fetchData();
     console.log(chartData);

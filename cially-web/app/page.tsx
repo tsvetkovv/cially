@@ -75,7 +75,7 @@ export default function Home() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit" className="text-white">Submit</Button>
             </form>
           </Form>
         </CardContent>
