@@ -8,6 +8,9 @@ const guild_collection_name = process.env.GUILD_COLLECTION;
 let collection_name = process.env.MESSAGE_COLLECTION;
 const { registerGuild } = require("./logic/registerGuild");
 
+// Disabled Auto Cancellation
+pb.autoCancellation(false)
+
 async function messageCreate(req, res, client) {
   let body = req.body;
   const { guildID, messageID, messageLength, channelID, authorID } = body;

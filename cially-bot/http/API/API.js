@@ -8,13 +8,13 @@ const { messageCreate } = require('./functions/messageCreate')
 const { inviteCreate } = require('./functions/inviteCreate')
 const { guildMemberRemove } = require('./functions/guildMemberRemove')
 const { guildMemberAdd } = require('./functions/guildMemberAdd')
+const { fetchID } = require('./functions/fetchID')
 
 const PocketBase = require("pocketbase/cjs");
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 
-// Globally Disabled Auto Cancellation
-pb.autoCancellation(false)
+
 
 // FIXME fix res logging
 
@@ -45,6 +45,10 @@ async function API(client) {
   
   app.post("/guildMemberRemove/:guildID", (req, res) => {
     guildMemberRemove(req, res, client);
+  });
+  
+  app.post("/fetchID/:guildID", (req, res) => {
+    fetchID(req, res, client);
   });
   
   app.listen(port, () => {
