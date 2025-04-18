@@ -17,6 +17,20 @@ async function fetchID(req, res, client) {
     let guild = client.guilds.cache.get(
       `${String(guildID)}`
     );
+    
+    channels.forEach(async channel => {
+      try {
+        let discordChannel = await client.channels.fetch(channel)
+        console.log( `Adding:` + discordChannel.name)
+        newArray.newChannels.push({ id: channel, name: `${discordChannel.name}` })
+        debug({ text: `Added Succesfully Channel: ${channel}` });
+
+      } catch (err) {
+        debug({ text: `Failed to add Channel: ${channel}` });
+      }
+
+    });
+
     users.forEach(async user => {
       try {
         let discordUser = client.users.cache.get(user)
@@ -30,19 +44,9 @@ async function fetchID(req, res, client) {
     });
 
 
-    channels.forEach(async channel => {
-      try {
-        let discordChannel = await client.channels.fetch(channel)
-        newArray.newChannels.push({ id: channel, name: discordChannel.name })
-        debug({ text: `Added Succesfully Channel: ${channel}` });
-
-      } catch (err) {
-        debug({ text: `Failed to add Channel: ${channel}` });
-
-      }
-
-    });
-    res.send(newArray);
+    
+    await console.log(newArray)
+    await res.send(newArray);
   } catch (err) {
     error({ text: `Failed to communicate with the Discord API. /fetchID${guildID}` });
     console.log(err)

@@ -18,14 +18,7 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-]
+
 
 
 
@@ -36,7 +29,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function ActiveHours() {
+export default function ActiveHours({chartData}) {
     return (
 
         <Card>
@@ -50,22 +43,22 @@ export default function ActiveHours() {
                         accessibilityLayer
                         data={chartData}
                         margin={{
-                            top: 20,
+                            top: 10,
                         }}
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis
-                            dataKey="month"
-                            tickLine={false}
+                            dataKey="hour"
+                            tickLine={true}
                             tickMargin={10}
-                            axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
+                            axisLine={true}
+                            tickFormatter={(value) => value.slice(0, 2)}
                         />
                         <ChartTooltip
-                            cursor={false}
+                            cursor={true}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
+                        <Bar dataKey="amount" fill="var(--color-desktop)" radius={4}>
                             <LabelList
                                 position="top"
                                 offset={12}

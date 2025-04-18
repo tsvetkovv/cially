@@ -18,14 +18,14 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-]
+// const chartData = [
+//     { month: "January", desktop: 186 },
+//     { month: "February", desktop: 305 },
+//     { month: "March", desktop: 237 },
+//     { month: "April", desktop: 73 },
+//     { month: "May", desktop: 209 },
+//     { month: "June", desktop: 214 },
+// ]
 
 
 
@@ -36,7 +36,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function ActiveUsers() {
+export default function ActiveUsers({ chartData }) {
     return (
 
         <Card>
@@ -44,38 +44,38 @@ export default function ActiveUsers() {
                 <CardTitle>Most Active Users</CardTitle>
                 <CardDescription>Last 4 weeks</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pb-2 max-h-[422px]">
                 <ChartContainer config={chartConfig}>
                     <BarChart
                         accessibilityLayer
                         data={chartData}
                         layout="vertical"
-                        margin={{
-                            left: 0,
-                        }}
+                        margin={{ left: 100, right: -80 }}
+                        barCategoryGap={20}
                     >
                         <YAxis
-                            dataKey="month"
+                            dataKey="author"
                             type="category"
                             tickLine={false}
-                            tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) =>
-                                chartConfig[value as keyof typeof chartConfig]?.label
-                            }
+                            tick={{
+                                fill: "#cbd5e1", // Tailwind's slate-300
+                                fontSize: 14,
+                                fontWeight: 500,
+                            }}
                         />
-                        <XAxis dataKey="desktop" type="number" hide />
+                        <XAxis dataKey="amount" type="number" hide />
                         <ChartTooltip
-                            cursor={false}
+                            cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
                             content={<ChartTooltipContent hideLabel />}
                         />
-                        <Bar dataKey="desktop" layout="vertical" radius={5} />
+                        <Bar dataKey="amount" layout="vertical" radius={[5, 5, 5, 5]} fill="#03d5ff" />
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2 text-sm">
-                <div className="flex items-center gap-2 font-medium leading-none place-items-center">
-                    Most Active User:<div className="text-gray-300 text-center">skell-greco</div>
+            <CardFooter className="flex-col items-center gap-2 text-sm">
+                <div className="gap-2 font-medium leading-none text-center">
+                    Most Active User: <div className="text-gray-300 text-center inline">{chartData[0].author}</div>
                 </div>
             </CardFooter>
         </Card>

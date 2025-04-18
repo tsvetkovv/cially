@@ -165,6 +165,8 @@ export async function GET(
                     return
                 }
             });
+            fourWeekData = fourWeekData.toReversed();
+
 
             let activeChannels = []
 
@@ -201,9 +203,9 @@ export async function GET(
 
             while (o < 25) {
                 if (o < 10) {
-                    activeHourData.push({ hour: `0${i}`, amount: 0 });
+                    activeHourData.push({ hour: `0${o}`, amount: 0 });
                 } else {
-                    activeHourData.push({ hour: `${i}`, amount: 0 });
+                    activeHourData.push({ hour: `${o}`, amount: 0 });
                 }
                 o = o + 1
             }
@@ -219,8 +221,7 @@ export async function GET(
                     }
                 });
             });
-            activeHourData.sort((a, b) => b.amount - a.amount);
-            activeHourData = activeHourData.slice(0, 5)
+            // activeHourData = activeHourData.slice(0, 5)
             activeHourData.sort((a, b) => a.hour - b.hour);
 
             let discordDataOUT = [{ channels: [], users: [] }]
@@ -242,6 +243,37 @@ export async function GET(
                 }
             );
             const discordDataIN = await discordDataIN_Req.json();
+
+            const channelMap = {};
+            const userMap = {};
+            
+            if (discordDataIN.newChannels && discordDataIN.newChannels.length > 0) {
+                discordDataIN.newChannels.forEach(channel => {
+                    channelMap[channel.id] = channel.name;
+                });
+            }
+            
+            if (discordDataIN.newUsers && discordDataIN.newUsers.length > 0) {
+                discordDataIN.newUsers.forEach(user => {
+                    userMap[user.id] = user.name;
+                });
+            }
+            
+            activeChannels = activeChannels.map(channel => {
+                return {
+                    channel: channelMap[channel.channel] || channel.channel,
+                    originalId: channel.channel,
+                    amount: channel.amount
+                };
+            });
+            
+            activeUsers = activeUsers.map(user => {
+                return {
+                    author: userMap[user.author] || user.author,
+                    originalId: user.author,
+                    amount: user.amount
+                };
+            });
 
             let finalData = []
             finalData.push({ HourData: hourData, WeekData: weekData, FourWeekData: fourWeekData, ChannelData: activeChannels, ActiveUsersData: activeUsers, ActiveHourData: activeHourData, ID: discordDataIN })

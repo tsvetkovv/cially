@@ -13,7 +13,7 @@ export default async function Dashboard({
   // TODO notification wih memory to let the user know that the data is not of all time
 
 
-  let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`, { next: { revalidate: 30 } })
+  let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`)
   let data = await API_REQ.json()
  
 

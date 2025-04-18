@@ -33,12 +33,12 @@ export function AppSidebar() {
       title: "Messages & Activity",
       url: `/dashboard/messages?guildID=${guildID}`,
       icon: Inbox,
-    },
+    },/* 
     {
       title: "Growth",
       url: `/dashboard/growth?guildID=${guildID}`,
       icon: ChartLine,
-    },
+    }, */
   ]
   return (
     <Sidebar className="bg-white/4 backdrop-blur-md rounded-lg border border-white/0">

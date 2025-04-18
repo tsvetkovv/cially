@@ -18,25 +18,17 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-]
 
 
 
 const chartConfig = {
-    desktop: {
-        label: "Desktop",
+    channel: {
+        label: "channel",
         color: "#03d5ff",
     },
 } satisfies ChartConfig
 
-export default function ActiveChannels() {
+export default function ActiveChannels({chartData}) {
     return (
 
         <Card>
@@ -48,15 +40,15 @@ export default function ActiveChannels() {
             <CardContent className="pb-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-[250px]"
+                    className="mx-auto aspect-square max-h-[322px]"
                 >
-                    <RadarChart data={chartData}>
-                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                        <PolarAngleAxis dataKey="month" />
+                    <RadarChart data={chartData} >
+                        <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
+                        <PolarAngleAxis dataKey="channel" />
                         <PolarGrid />
                         <Radar
-                            dataKey="desktop"
-                            fill="var(--color-desktop)"
+                            dataKey="amount"
+                            fill="var(--color-channel)"
                             fillOpacity={0.6}
                             dot={{
                                 r: 4,
@@ -68,7 +60,7 @@ export default function ActiveChannels() {
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 font-medium leading-none text-center">
-                    Most Active Channel:<div className="text-gray-300">general-chat</div>
+                    Most Active Channel:<div className="text-gray-300">{chartData[0].channel}</div>
                 </div>
 
             </CardFooter>
