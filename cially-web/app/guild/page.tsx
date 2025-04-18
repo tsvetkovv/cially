@@ -32,6 +32,7 @@ export default function DataDashboard() {
   } else if (!chartData.guildFound) {
     return <LoadingSVG />
   } else {
+
     redirect(`dashboard?guildID=${guildID}`)
     
   }

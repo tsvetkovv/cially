@@ -12,12 +12,12 @@ export default async function Dashboard({
 
   // TODO notification wih memory to let the user know that the data is not of all time
 
-/* 
+
   let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`, { next: { revalidate: 30 } })
   let data = await API_REQ.json()
- */
+ 
 
-  let data = {
+  /* let data = {
     guildFound: [
       {
         discordID: "1247194176638947389",
@@ -32,7 +32,7 @@ export default async function Dashboard({
         owner_username: "skellgreco",
       },
     ],
-  };
+  }; */
 
 
   let guild = data.guildFound[0];
@@ -65,6 +65,9 @@ export default async function Dashboard({
         </div>
         
       </div>
+      <div className="text-center mt-5 text-xs text-gray-600 pb-5">
+          Thanks for using Cially Dashboard!
+        </div>
     </>
   );
 }
