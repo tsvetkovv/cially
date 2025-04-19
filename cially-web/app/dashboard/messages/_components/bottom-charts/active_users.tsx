@@ -18,15 +18,6 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-// const chartData = [
-//     { month: "January", desktop: 186 },
-//     { month: "February", desktop: 305 },
-//     { month: "March", desktop: 237 },
-//     { month: "April", desktop: 73 },
-//     { month: "May", desktop: 209 },
-//     { month: "June", desktop: 214 },
-// ]
-
 
 
 const chartConfig = {
@@ -38,19 +29,18 @@ const chartConfig = {
 
 export default function ActiveUsers({ chartData }) {
     return (
-
-        <Card>
+        <Card className="w-full h-full">
             <CardHeader>
                 <CardTitle>Most Active Users</CardTitle>
                 <CardDescription>Last 4 weeks</CardDescription>
             </CardHeader>
-            <CardContent className="pb-2 max-h-[422px]">
-                <ChartContainer config={chartConfig}>
+            <CardContent className="pb-2">
+                <ChartContainer config={chartConfig} className="w-full">
                     <BarChart
                         accessibilityLayer
                         data={chartData}
                         layout="vertical"
-                        margin={{ left: 100, right: -80 }}
+                        margin={{ left: 100, right: 10 }}
                         barCategoryGap={20}
                     >
                         <YAxis
@@ -59,7 +49,7 @@ export default function ActiveUsers({ chartData }) {
                             tickLine={false}
                             axisLine={false}
                             tick={{
-                                fill: "#cbd5e1", // Tailwind's slate-300
+                                fill: "#cbd5e1",
                                 fontSize: 14,
                                 fontWeight: 500,
                             }}
@@ -73,9 +63,9 @@ export default function ActiveUsers({ chartData }) {
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col items-center gap-2 text-sm">
-                <div className="gap-2 font-medium leading-none text-center">
-                    Most Active User: <div className="text-gray-300 text-center inline">{chartData[0].author}</div>
+            <CardFooter className="flex justify-center items-center gap-2 text-sm">
+                <div className="font-medium mt-24">
+                    Most Active User: <span className="text-gray-300 ml-1">{chartData[0].author}</span>
                 </div>
             </CardFooter>
         </Card>

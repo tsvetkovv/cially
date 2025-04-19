@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import LoadingSVG from "../_components/_events/loading-page";
 import GuildNotFound from "../_components/_events/guildNotFound";
 import { redirect } from 'next/navigation'
+let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL
 
 export default function DataDashboard() {
   const searchParams = useSearchParams();
@@ -14,18 +15,15 @@ export default function DataDashboard() {
   
   useEffect(() => {
     async function fetchData() {
-      /* let chartDataReceived = await fetch(
-        `http://localhost:3000/api/server/${guildID}/fetchGuild`
+      let chartDataReceived = await fetch(
+        `${WEBSITE_URL}/api/server/${guildID}/fetchGuild`
       );
       let json = await chartDataReceived.json();
-      setChartData(json); */
-      setChartData({ guildFound: { guildFound: 69 }})
+      setChartData(json);
     }
     fetchData();
-    console.log(chartData);
   }, []);
   
-  // <MessageChart chartData={chartData.dataArray} /> the way to import data
   
   if (chartData.notFound) {
     return <GuildNotFound />

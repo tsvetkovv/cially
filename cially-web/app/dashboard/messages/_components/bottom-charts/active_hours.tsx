@@ -29,22 +29,29 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function ActiveHours({chartData}) {
+export default function ActiveHours({ chartData }) {
     return (
-
-        <Card>
+        <Card className="w-full h-full">
             <CardHeader>
                 <CardTitle>Most Active Hours (UTC)</CardTitle>
                 <CardDescription>Last 4 weeks</CardDescription>
             </CardHeader>
-            <CardContent>
-                <ChartContainer config={chartConfig}>
+            <CardContent className="pt-2 pb-4">
+                <ChartContainer
+                    config={chartConfig}
+                    className="w-full"
+                    style={{ height: '300px' }} // Set explicit height
+                >
                     <BarChart
                         accessibilityLayer
                         data={chartData}
                         margin={{
-                            top: 10,
+                            top: 20,
+                            bottom: 20,
+                            left: 10,
+                            right: 10
                         }}
+                        height={260} // Set explicit height for the BarChart
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis
@@ -69,11 +76,8 @@ export default function ActiveHours({chartData}) {
                     </BarChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2 text-sm">
-                <div className="flex items-center gap-2 font-medium leading-none text-center">
-                    Most Active Hour:<div className="text-gray-300 text-center">20:00</div>
-                </div>
-
+            <CardFooter className="flex justify-center items-center gap-2 text-sm">
+                
             </CardFooter>
         </Card>
     )

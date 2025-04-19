@@ -12,9 +12,6 @@ const API_URL = process.env.API_URL;
 // Main Event
 function sendPostRequest({ data, guildId, type }) {
 
-    // TODO Should queue each request before sending them as many requests cause issues on the backend.
-    // Still investigating for some other more efficient workaround
-
   try {
     // Send a debug message on attempt
     debug({ text: `HTTP Request sent` });

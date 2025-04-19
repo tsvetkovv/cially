@@ -69,7 +69,7 @@ export async function GET(
             let hourData = []
 
             let i = 0
-
+//
             while (i < 25) {
                 if (i < 10) {
                     hourData.push({ hour: `0${i}`, amount: 0 });

@@ -29,6 +29,23 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Last7d({chartData}) {
+
+    let ArrayChartData = Array(chartData)[0]
+
+    let startingDate = new Date(Date.now() - 0 * 24 * 60 * 60 * 1000)
+    let startingDate_formatted = `${(startingDate.getUTCMonth() + 1).toString().padStart(2, "0")}-${(startingDate.getUTCDate()).toString().padStart(2, "0")}`
+    
+    let previousDate = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+    let previousDate_formatted = `${(previousDate.getUTCMonth() + 1).toString().padStart(2, "0")}-${(previousDate.getUTCDate()).toString().padStart(2, "0")}`
+
+    let currentAmount_index = ArrayChartData.findIndex((item) => item.date === startingDate_formatted);
+    let currentAmount = ArrayChartData[currentAmount_index].amount
+
+    let previousAmount_index = ArrayChartData.findIndex((item) => item.date === previousDate_formatted);
+    let previousAmount = ArrayChartData[previousAmount_index].amount
+
+    let difference = currentAmount - previousAmount
+
     return (
 
         <Card>
@@ -73,8 +90,9 @@ export default function Last7d({chartData}) {
             <CardFooter>
                 <div className="flex w-full items-start gap-2 text-sm">
                     <div className="grid gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            -10% than yesterday <TrendingDown className="h-4 w-4" />
+                    <div className="flex items-center gap-2 font-medium leading-none">
+                        { (difference > 0) ? <div className="text-green-400">+{difference} than yesterday <TrendingUp className="inline h-4 w-4" /></div> : (difference != 0) ? <div className="text-red-400">{difference} than yesterday <TrendingDown className="inline h-4 w-4" /></div> : <div className="text-gray-400">+{difference} than yesterday</div> }
+
                         </div>
 
                     </div>

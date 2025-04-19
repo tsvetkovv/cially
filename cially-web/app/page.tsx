@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 import { z } from "zod";
 
@@ -40,8 +41,8 @@ export default function Home() {
   });
   
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    router.push(`/guild/?guildID=${values.guildID}`)
+    redirect(`guild/?guildID=${values.guildID}`)
+    
   }
 
   return (

@@ -10,7 +10,7 @@ var colors = require("colors");
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 
-// TODO Currently added every single intent. Planning to fix once I have a final version of the code
+// Currently using every single intent. 
 // Using https://discord-intents-calculator.vercel.app/ to generate the intents ID
 const client = new Client({
   intents: 53608447,
@@ -33,9 +33,7 @@ for (const folder of commandFolders) {
     if ("data" in command && "execute" in command) {
       client.commands.set(command.data.name, command);
     } else {
-      console.log(
-        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
-      );
+      error({ text: `The command at ${filePath} is missing a required "data" or "execute" property.` });
     }
   }
 }

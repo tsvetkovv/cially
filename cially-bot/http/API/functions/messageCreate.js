@@ -29,8 +29,6 @@ async function messageCreate(req, res, client) {
       .getFirstListItem(`discordID='${guildID}'`, {});
     debug({ text: `Guild has been found and is ready to add data to it` });
 
-    // FIXME Multiple messages dont get tracked
-
     try {
       const itemData = {
         author: authorID,

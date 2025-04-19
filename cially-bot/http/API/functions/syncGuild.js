@@ -8,7 +8,6 @@ const guild_collection_name = process.env.GUILD_COLLECTION;
 const { registerGuild } = require("./logic/registerGuild");
 
 async function syncGuild(req, res, client) {
-  // TODO add ratelimits
 
   let success_message = { code: "success" };
   let error_message = { code: "error" };

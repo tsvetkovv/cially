@@ -23,6 +23,26 @@ import {
 
 export default function Last24h({ chartData }) {
 
+    let ArrayChartData = Array(chartData)[0]
+    console.log(ArrayChartData)
+
+    let startingDate = new Date(Date.now() - 0 * 24 * 60 * 60 * 1000)
+    let startingDate_formatted = `${(startingDate.getUTCHours().toString().padStart(2, "0"))}`
+    console.log(startingDate_formatted)
+
+    
+    let previousDate = new Date(Date.now() - 1 * 60 * 60 * 1000)
+    let previousDate_formatted = `${(previousDate.getUTCHours().toString().padStart(2, "0"))}`
+    console.log(previousDate_formatted)
+
+    let currentAmount_index = ArrayChartData.findIndex((item) => item.hour === startingDate_formatted);
+    let currentAmount = ArrayChartData[currentAmount_index].amount
+
+    let previousAmount_index = ArrayChartData.findIndex((item) => item.hour === previousDate_formatted);
+    let previousAmount = ArrayChartData[previousAmount_index].amount
+
+    let difference = currentAmount - previousAmount
+
 
     const chartConfig = {
         hour: {
@@ -80,8 +100,9 @@ export default function Last24h({ chartData }) {
             <CardFooter>
                 <div className="flex w-full items-start gap-2 text-sm">
                     <div className="grid gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            +5% Increase this hour <TrendingUp className="h-4 w-4" />
+                    <div className="flex items-center gap-2 font-medium leading-none">
+                        { (difference > 0) ? <div className="text-green-400">+{difference} than previous hour <TrendingUp className="inline h-4 w-4" /></div> : (difference != 0) ? <div className="text-red-400">{difference} than previous hour <TrendingDown className="inline h-4 w-4" /></div> : <div className="text-gray-400">+{difference} than previous hour</div> }
+
                         </div>
 
                     </div>

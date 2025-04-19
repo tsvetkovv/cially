@@ -13,6 +13,7 @@ import LoadingSVG from "@/app/_components/_events/loading-page";
 import GuildNotFound from "@/app/_components/_events/guildNotFound";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL
 
 export default function MessagesDashboard() {
     const searchParams = useSearchParams();
@@ -21,10 +22,9 @@ export default function MessagesDashboard() {
 
     useEffect(() => {
 
-        // TODO make it dynamic
         async function fetchData() {
             let chartDataReceived = await fetch(
-                `http://localhost:3000/api/server/${guildID}/fetchMessageData`);
+                `${WEBSITE_URL}/api/server/${guildID}/fetchMessageData`);
             let json = await chartDataReceived.json();
             setChartData(json);
 
@@ -39,7 +39,6 @@ export default function MessagesDashboard() {
             <LoadingSVG />
         </div>
     } else {
-        console.log(chartData);
         let data_24h = chartData.finalData[0].HourData
         let data_7d = chartData.finalData[0].WeekData
         let data_4w = chartData.finalData[0].FourWeekData
@@ -51,9 +50,9 @@ export default function MessagesDashboard() {
         return (
             <>
                 <div className="text-2xl mt-10 ml-10">Messages Analytics</div>
-                <hr className="ml-5 mt-2 w-dvh mr-5"></hr>
+                <hr className="ml-5 mt-2 w-50 sm:w-dvh mr-5"></hr>
 
-                <div className="grid grid-cols-3 mt-10 mx-10 gap-x-3">
+                <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 max-w-80 sm:max-w-full mt-10 sm:ml-10 ml-8 gap-y-4 sm:gap-y-0 sm:gap-x-3 sm:mr-5">
 
                     <Last24h chartData={data_24h} />
                     <Last7d chartData={data_7d} />
@@ -62,19 +61,19 @@ export default function MessagesDashboard() {
                 </div>
 
                 <div className="text-2xl mt-10 ml-10">Activity Analytics</div>
-                <hr className="ml-5 mt-2 w-dvh mr-5"></hr>
+                <hr className="ml-5 mt-2 w-50 sm:w-dvh mr-5"></hr>
 
 
-                <div className="grid grid-cols-1 mt-10 mx-10 gap-x-3">
-                    <ScrollArea className="w-full whitespace-nowrap rounded-md border">
-                        <div className="flex w-max space-x-4 p-4">
-                            <div className="min-w-dvh flex-shrink-0">
+                <div className="container mx-auto px-4 py-8 max-w-95 sm:max-w-240">
+                    <ScrollArea className="w-full rounded-md border">
+                        <div className="flex space-x-4 p-4">
+                            <div className="min-w-[300px] flex-shrink-0">
                                 <ActiveChannels chartData={data_channels} />
                             </div>
-                            <div className="min-w-dvh  flex-shrink-0">
+                            <div className="min-w-[300px] flex-shrink-0">
                                 <ActiveHours chartData={data_hours} />
                             </div>
-                            <div className="min-w-dvh flex-shrink-0">
+                            <div className="min-w-[300px] flex-shrink-0">
                                 <ActiveUsers chartData={data_users} />
                             </div>
                         </div>

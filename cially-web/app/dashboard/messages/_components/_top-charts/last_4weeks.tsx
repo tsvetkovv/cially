@@ -29,6 +29,28 @@ export default function Last4Weeks({ chartData }) {
         },
     } satisfies ChartConfig
 
+    let ArrayChartData = Array(chartData)[0]
+
+    let startingDate = new Date(Date.now() - 0 * 24 * 60 * 60 * 1000)
+    let startingDate_factor = startingDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric"
+    }) 
+    
+    let previousDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    let previousDate_factor = previousDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric"
+    }) 
+
+    let currentAmount_index = ArrayChartData.findIndex((item) => item.factor === startingDate_factor);
+    let currentAmount = ArrayChartData[currentAmount_index].amount
+
+    let previousAmount_index = ArrayChartData.findIndex((item) => item.factor === previousDate_factor);
+    let previousAmount = ArrayChartData[previousAmount_index].amount
+
+    let difference = currentAmount - previousAmount
+
     return (
 
         <Card>
@@ -81,7 +103,8 @@ export default function Last4Weeks({ chartData }) {
                 <div className="flex w-full items-start gap-2 text-sm">
                     <div className="grid gap-2">
                         <div className="flex items-center gap-2 font-medium leading-none">
-                            -10% than last week <TrendingDown className="h-4 w-4" />
+                        { (difference > 0) ? <div className="text-green-400">+{difference} than previous week <TrendingUp className="inline h-4 w-4" /></div> : (difference != 0) ? <div className="text-red-400">{difference} than previous week <TrendingDown className="inline h-4 w-4" /></div> : <div className="text-gray-400">+{difference} than previous week</div> }
+
                         </div>
 
                     </div>

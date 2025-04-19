@@ -21,7 +21,6 @@ async function fetchID(req, res, client) {
     channels.forEach(async channel => {
       try {
         let discordChannel = await client.channels.fetch(channel)
-        console.log( `Adding:` + discordChannel.name)
         newArray.newChannels.push({ id: channel, name: `${discordChannel.name}` })
         debug({ text: `Added Succesfully Channel: ${channel}` });
 
@@ -43,9 +42,10 @@ async function fetchID(req, res, client) {
       }
     });
 
-
+    // I dont know why, but without this debug line things break
+    // Please do not remove :)
+    await debug({ text: `IDs fetched. Ready to send response` });
     
-    await console.log(newArray)
     await res.send(newArray);
   } catch (err) {
     error({ text: `Failed to communicate with the Discord API. /fetchID${guildID}` });

@@ -28,18 +28,18 @@ export default function BottomCard({guild}) {
 
     return (
         <>
-        <Card className="grid grid-cols-5 mt-10 px-10 min-w-dvh">
-            <div className="col-span-1 col-start-1 w-20 h-20">
+        <Card className="grid sm:grid-rows-1 grid-rows-1 sm:grid-cols-5 mt-10 px-10 sm:min-w-dvh">
+            <div className="sm:col-span-1 col-start-1 w-20 h-20 place-self-center sm:place-self-auto">
               <Avatar className=" w-20 h-20">
                 <AvatarImage src={guild.icon_url} />
                 <AvatarFallback>Guild</AvatarFallback>
               </Avatar>
             </div>
 
-            <div className="col-span-2 grid grid-rows-2">
+            <div className="sm:col-span-2 grid grid-rows-1 text-center sm:text-left">
               <div>
                 <div className="text-2xl">{guild.name}</div>
-                <div className="text-gray-400 text-xs">
+                <div className="text-gray-400 text-xs mb-10">
                   {correct_description}
                 </div>
               </div>
@@ -74,7 +74,7 @@ export default function BottomCard({guild}) {
               </div>
             </div>
 
-            <div className="col-span-2 grid grid-rows-2">
+            <div className="sm:col-span-2 grid grid-rows-1 text-center sm:text-left mt-5 sm:mt-0">
               <div>
                 <div className="text-2xl"></div>
                 <div className="text-gray-400 text-xs">
