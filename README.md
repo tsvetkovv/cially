@@ -61,6 +61,10 @@ All ongoing synchronization and data enrichment—such as resolving names or syn
 ### Website
 1. Clone the `./cially-webserver` directory where you want the Website Code to run on
 2. Rename `.env.example` file to `.env` and replace each value. There are instructions for each variable so you will know what to change
+3. Run `npm run build` to build the website.
+
+> [!TIP]
+> If you are a beginner, you can use tools Coolify to simplify the hosting process. Check [Coolify's Docs](https://www.coolify.io/) for more info!
 
 And that's it! Once a new message is being detected by the bot for the first time, everything should start to work automatically! All you need to do is go to your Dashboard Page, paste your Server ID and all the data will be displayed!
 
