@@ -6,7 +6,7 @@ require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 const { REST, Routes } = require("discord.js");
 var colors = require("colors");
 
-// Variable Imports from .env
+// Config Imports from .env
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 
