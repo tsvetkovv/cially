@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  cially-bot:
+    image: ghcr.io/skellgreco/cially-bot:latest
+    container_name: cially-bot
+    restart: unless-stopped
+    environment:
+      - TOKEN=${BOT_TOKEN}
+      - CLIENT_ID=${BOT_CLIENT_ID}
+      - API_URL=http://cially-web:3000/api
+      - DEBUGGING=${BOT_DEBUGGING:-FALSE}
+      - POCKETBASE_URL=http://pocketbase:8090
+      - GUILD_COLLECTION=guilds
+      - MESSAGE_COLLECTION=messages
+      - INVITE_COLLECTION=invites
+      - MEMBER_LEAVES_COLLECTION=member_leaves
+      - MEMBER_JOINS_COLLECTION=member_joins
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - pocketbase
+      - cially-web
+    networks:
+      - cially-network
+
+  cially-web:
+    image: ghcr.io/skellgreco/cially-web:latest
+    container_name: cially-web
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_WEBSITE_URL=http://localhost:3000
+      - POCKETBASE_URL=http://pocketbase:8090
+      - MESSAGE_COLLECTION=messages
+      - INVITE_COLLECTION=invites
+      - MEMBER_LEAVES_COLLECTION=member_leaves
+      - MEMBER_JOINS_COLLECTION=member_joins
+      - GUILDS_COLLECTION=guilds
+      - BOT_API_URL=http://cially-bot:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pocketbase
+    networks:
+      - cially-network
+
+  pocketbase:
+    image: ghcr.io/skellgreco/pocketbase:latest
+    container_name: pocketbase
+    restart: unless-stopped
+    volumes:
+      - pocketbase-data:/pb_data
+      - pocketbase-public:/pb_public
+      - pocketbase-hooks:/pb_hooks
+    ports:
+      - "8090:8090"
+    networks:
+      - cially-network
+
+networks:
+  cially-network:
+    driver: bridge
+
+volumes:
+  pocketbase-data:
+  pocketbase-public:
+  pocketbase-hooks:
