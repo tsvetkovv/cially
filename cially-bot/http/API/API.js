@@ -9,6 +9,7 @@ const { inviteCreate } = require('./functions/inviteCreate')
 const { guildMemberRemove } = require('./functions/guildMemberRemove')
 const { guildMemberAdd } = require('./functions/guildMemberAdd')
 const { fetchID } = require('./functions/fetchID')
+const { fetchGuilds } = require('./functions/fetchGuilds')
 
 const PocketBase = require("pocketbase/cjs");
 const url = process.env.POCKETBASE_URL;
@@ -45,6 +46,10 @@ async function API(client) {
   
   app.post("/fetchID/:guildID", (req, res) => {
     fetchID(req, res, client);
+  });
+  
+  app.get("/fetchGuilds", (req, res) => {
+    fetchGuilds(req, res, client);
   });
   
   app.listen(port, () => {
