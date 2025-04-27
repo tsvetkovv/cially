@@ -103,7 +103,7 @@ export default async function DataDashboard() {
         <div className="w-20 place-self-center">
           <img src="/logo-png.png"></img>
         </div>
-        <div className="text-center">Looks like the Discord Bot can't communicate with the Dashboard.<br></br>
+        <div className="text-center mx-5">Looks like the Discord Bot can't communicate with the Dashboard.<br></br>
           Please make sure that you followed the setup instructions correctly and that the bot is up and running!<br></br><br></br>
           Are you facing other issues? Check our GitHub and seek support!<br></br>
           <a href="https://github.com/skellgreco/cially" className="text-blue-400 underline">GitHub Redirect</a>
