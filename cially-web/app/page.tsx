@@ -49,9 +49,9 @@ export default function Home() {
     <div className="w-40 place-self-center">
       <img src="/logo-png.png"></img>
       </div>
-      <Card className="mt-2 mx-10">
+      <Card className="mx-10 mt-2">
         <CardHeader>
-          <CardTitle className="text-3xl text-center">Cially</CardTitle>
+          <CardTitle className="text-center text-3xl">Cially</CardTitle>
           <CardDescription className="text-center">
             Please enter your info to proceed
           </CardDescription>

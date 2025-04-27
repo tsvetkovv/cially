@@ -36,7 +36,7 @@ const chartConfig = {
 
 export default function ActiveUsers({ chartData }) {
 	return (
-		<Card className="w-full h-full">
+		<Card className="h-full w-full">
 			<CardHeader>
 				<CardTitle>Most Active Users</CardTitle>
 				<CardDescription>Last 4 weeks</CardDescription>
@@ -75,10 +75,10 @@ export default function ActiveUsers({ chartData }) {
 					</BarChart>
 				</ChartContainer>
 			</CardContent>
-			<CardFooter className="flex justify-center items-center gap-2 text-sm">
-				<div className="font-medium mt-24">
+			<CardFooter className="flex items-center justify-center gap-2 text-sm">
+				<div className="mt-24 font-medium">
 					Most Active User:{" "}
-					<span className="text-gray-300 ml-1">{chartData[0].author}</span>
+					<span className="ml-1 text-gray-300">{chartData[0].author}</span>
 				</div>
 			</CardFooter>
 		</Card>

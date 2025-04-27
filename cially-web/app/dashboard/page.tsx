@@ -23,19 +23,19 @@ export default async function Dashboard({
 
 	return (
 		<>
-			<div className="grid grid-rows-3 sm:grid-rows-none ml-10 mt-10 sm:min-w-dvh mr-4">
+			<div className="mt-10 mr-4 ml-10 grid grid-rows-3 sm:min-w-dvh sm:grid-rows-none">
 				<div>
-					<div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-8 rows-span-1 ">
-						<div className="sm:col-span-2 text-4xl ">
+					<div className="rows-span-1 grid grid-rows-3 sm:grid-cols-8 sm:grid-rows-none ">
+						<div className="text-4xl sm:col-span-2 ">
 							{welcome_message}
-							<div className="text-gray-400 text-xs font-normal mt-2">
+							<div className="mt-2 font-normal text-gray-400 text-xs">
 								Currently viewing {guild.name}
 							</div>
 						</div>
-						<div className="sm:col-start-4 sm:col-span-2 mr-4">
+						<div className="mr-4 sm:col-span-2 sm:col-start-4">
 							<MemberBlock guild={guild} />
 						</div>
-						<div className="sm:col-start-6 sm:col-span-2 mr-4">
+						<div className="mr-4 sm:col-span-2 sm:col-start-6">
 							<MessagesBlock guild={guild} />
 						</div>
 					</div>
@@ -43,7 +43,7 @@ export default async function Dashboard({
 
 				<div className="row-span-3 sm:row-span-1">
 					<BottomCard guild={guild} />
-					<div className="text-center mt-5 text-xs text-gray-600 pb-5">
+					<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
 						Thanks for using Cially Dashboard!
 					</div>
 				</div>

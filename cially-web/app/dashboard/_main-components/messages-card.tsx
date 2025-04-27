@@ -16,12 +16,12 @@ export default function MessagesBlock({ guild }) {
 			<Card className="">
 				<CardHeader>
 					<CardTitle className="text-sm">
-						<MessageCircle className="inline -translate-y-0.5 mr-2" />
+						<MessageCircle className="-translate-y-0.5 mr-2 inline" />
 						Messages Today
 					</CardTitle>
-					<CardDescription className="text-gray-300 text-2xl">
+					<CardDescription className="text-2xl text-gray-300">
 						{guild.today_msg}
-						<div className="text-xs mt-2">
+						<div className="mt-2 text-xs">
 							{guild.msg_day_difference > 0 ? (
 								<div className="text-green-400">
 									+{guild.msg_day_difference} than yesterday

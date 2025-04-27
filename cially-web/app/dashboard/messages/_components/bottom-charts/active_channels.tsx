@@ -36,13 +36,13 @@ const chartConfig = {
 
 export default function ActiveChannels({ chartData }) {
 	return (
-		<Card className="w-full h-full">
+		<Card className="h-full w-full">
 			<CardHeader>
 				<CardTitle>Most Active Channels</CardTitle>
 				<CardDescription>Last 4 weeks</CardDescription>
 			</CardHeader>
 			<CardContent className="pb-0">
-				<ChartContainer config={chartConfig} className="w-full aspect-square">
+				<ChartContainer config={chartConfig} className="aspect-square w-full">
 					<RadarChart data={chartData}>
 						<ChartTooltip cursor={true} content={<ChartTooltipContent />} />
 						<PolarAngleAxis dataKey="channel" />
@@ -59,10 +59,10 @@ export default function ActiveChannels({ chartData }) {
 					</RadarChart>
 				</ChartContainer>
 			</CardContent>
-			<CardFooter className="flex justify-center items-center gap-2 text-sm">
+			<CardFooter className="flex items-center justify-center gap-2 text-sm">
 				<div className="font-medium leading-none">
 					Most Active Channel:{" "}
-					<span className="text-gray-300 ml-1">{chartData[0].channel}</span>
+					<span className="ml-1 text-gray-300">{chartData[0].channel}</span>
 				</div>
 			</CardFooter>
 		</Card>

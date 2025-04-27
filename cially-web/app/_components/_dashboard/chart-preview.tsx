@@ -74,7 +74,7 @@ export function MessageChart({ chartData }) {
 							<div className="flex items-center gap-2 font-medium leading-none">
 								Trending up by 5.2% this month
 							</div>
-							<div className="flex items-center gap-2 leading-none text-muted-foreground">
+							<div className="flex items-center gap-2 text-muted-foreground leading-none">
 								January - June 2024
 							</div>
 						</div>

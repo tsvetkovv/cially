@@ -36,7 +36,7 @@ const chartConfig = {
 
 export default function ActiveHours({ chartData }) {
 	return (
-		<Card className="w-full h-full">
+		<Card className="h-full w-full">
 			<CardHeader>
 				<CardTitle>Most Active Hours (UTC)</CardTitle>
 				<CardDescription>Last 4 weeks</CardDescription>
@@ -81,7 +81,7 @@ export default function ActiveHours({ chartData }) {
 					</BarChart>
 				</ChartContainer>
 			</CardContent>
-			<CardFooter className="flex justify-center items-center gap-2 text-sm"></CardFooter>
+			<CardFooter className="flex items-center justify-center gap-2 text-sm"></CardFooter>
 		</Card>
 	);
 }

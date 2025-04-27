@@ -14,12 +14,12 @@ export default function MemberBlock({ guild }) {
 			<Card className="">
 				<CardHeader>
 					<CardTitle className="text-sm">
-						<UsersRound className="inline -translate-y-0.5 mr-2" />
+						<UsersRound className="-translate-y-0.5 mr-2 inline" />
 						Current Members
 					</CardTitle>
-					<CardDescription className="text-gray-300 text-2xl">
+					<CardDescription className="text-2xl text-gray-300">
 						{guild.members}
-						<div className="text-xs mt-2 text-red-400">
+						<div className="mt-2 text-red-400 text-xs">
 							{/* -5 than yesterday */}
 						</div>
 					</CardDescription>

@@ -1,7 +1,7 @@
 export default function LoadingSVG() {
 	return (
 		<>
-			<div className="w-30 place-self-center mt-30">
+			<div className="mt-30 w-30 place-self-center">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
 					<g fill="none" stroke="#ad023e" strokeWidth="2">
 						<circle cx="22" cy="22" r="19.5128">

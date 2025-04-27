@@ -39,7 +39,7 @@ export function AppSidebar() {
     }, */,
 	];
 	return (
-		<Sidebar className="bg-white/4 backdrop-blur-md rounded-lg border border-white/0">
+		<Sidebar className="rounded-lg border border-white/0 bg-white/4 backdrop-blur-md">
 			<SidebarHeader>
 				<a href="/">
 					<img src="/logo-png.png" className="w-20 place-self-center"></img>
@@ -53,7 +53,7 @@ export function AppSidebar() {
 						{items.map((item) => (
 							<SidebarMenuItem
 								key={item.title}
-								className="hover:bg-gradient-to-r from-white/0 to-white/10 rounded-sm transition-all"
+								className="rounded-sm from-white/0 to-white/10 transition-all hover:bg-gradient-to-r"
 							>
 								<SidebarMenuButton asChild>
 									<a href={item.url}>
