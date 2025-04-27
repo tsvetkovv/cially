@@ -1,29 +1,29 @@
 {
-  "name": "cially-bot",
-  "version": "0.0.1",
-  "description": "The Official Code of Cially Discord Bot",
-  "license": "ISC",
-  "author": "skellgreco",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "biome check .",
-    "check:fix": "biome check --write ."
-  },
-  "dependencies": {
-    "cfonts": "^3.3.0",
-    "colors": "^1.4.0",
-    "discord.js": "^14.18.0",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "ky": "^1.7.5",
-    "multer": "^1.4.5-lts.2",
-    "path": "^0.12.7",
-    "pocketbase": "^0.25.2",
-    "simple-get": "^4.0.1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.0.0-beta.1"
-  }
+	"name": "cially-bot",
+	"version": "0.0.1",
+	"description": "The Official Code of Cially Discord Bot",
+	"license": "ISC",
+	"author": "skellgreco",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"check": "biome check .",
+		"check:fix": "biome check --write ."
+	},
+	"dependencies": {
+		"cfonts": "^3.3.0",
+		"colors": "^1.4.0",
+		"discord.js": "^14.18.0",
+		"dotenv": "^16.4.7",
+		"express": "^5.1.0",
+		"ky": "^1.7.5",
+		"multer": "^1.4.5-lts.2",
+		"path": "^0.12.7",
+		"pocketbase": "^0.25.2",
+		"simple-get": "^4.0.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.0.0-beta.1"
+	}
 }

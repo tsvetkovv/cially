@@ -1,66 +1,70 @@
-"use client"
-import { TrendingDown, TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart, Bar, BarChart, YAxis, LabelList } from "recharts"
+"use client";
+import { TrendingDown, TrendingUp } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import {
+	Bar,
+	BarChart,
+	LabelList,
+	PolarAngleAxis,
+	PolarGrid,
+	Radar,
+	RadarChart,
+	YAxis,
+} from "recharts";
 
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import {
-    ChartConfig,
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-} from "@/components/ui/chart"
-
-
-
+	ChartConfig,
+	ChartContainer,
+	ChartTooltip,
+	ChartTooltipContent,
+} from "@/components/ui/chart";
 
 const chartConfig = {
-    channel: {
-        label: "channel",
-        color: "#03d5ff",
-    },
-} satisfies ChartConfig
+	channel: {
+		label: "channel",
+		color: "#03d5ff",
+	},
+} satisfies ChartConfig;
 
-export default function ActiveChannels({chartData}) {
-    return (
-        <Card className="w-full h-full">
-            <CardHeader>
-                <CardTitle>Most Active Channels</CardTitle>
-                <CardDescription>Last 4 weeks</CardDescription>
-            </CardHeader>
-            <CardContent className="pb-0">
-                <ChartContainer
-                    config={chartConfig}
-                    className="w-full aspect-square"
-                >
-                    <RadarChart data={chartData}>
-                        <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
-                        <PolarAngleAxis dataKey="channel" />
-                        <PolarGrid />
-                        <Radar
-                            dataKey="amount"
-                            fill="var(--color-channel)"
-                            fillOpacity={0.6}
-                            dot={{
-                                r: 4,
-                                fillOpacity: 1,
-                            }}
-                        />
-                    </RadarChart>
-                </ChartContainer>
-            </CardContent>
-            <CardFooter className="flex justify-center items-center gap-2 text-sm">
-                <div className="font-medium leading-none">
-                    Most Active Channel: <span className="text-gray-300 ml-1">{chartData[0].channel}</span>
-                </div>
-            </CardFooter>
-        </Card>
-    )
+export default function ActiveChannels({ chartData }) {
+	return (
+		<Card className="w-full h-full">
+			<CardHeader>
+				<CardTitle>Most Active Channels</CardTitle>
+				<CardDescription>Last 4 weeks</CardDescription>
+			</CardHeader>
+			<CardContent className="pb-0">
+				<ChartContainer config={chartConfig} className="w-full aspect-square">
+					<RadarChart data={chartData}>
+						<ChartTooltip cursor={true} content={<ChartTooltipContent />} />
+						<PolarAngleAxis dataKey="channel" />
+						<PolarGrid />
+						<Radar
+							dataKey="amount"
+							fill="var(--color-channel)"
+							fillOpacity={0.6}
+							dot={{
+								r: 4,
+								fillOpacity: 1,
+							}}
+						/>
+					</RadarChart>
+				</ChartContainer>
+			</CardContent>
+			<CardFooter className="flex justify-center items-center gap-2 text-sm">
+				<div className="font-medium leading-none">
+					Most Active Channel:{" "}
+					<span className="text-gray-300 ml-1">{chartData[0].channel}</span>
+				</div>
+			</CardFooter>
+		</Card>
+	);
 }

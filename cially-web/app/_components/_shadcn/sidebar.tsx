@@ -1,66 +1,72 @@
-"use client"
+"use client";
 
-import { Calendar, Home, Inbox, ChartLine } from "lucide-react"
-
+import { Calendar, ChartLine, Home, Inbox } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
-} from "@/components/ui/sidebar"
-import { useSearchParams } from 'next/navigation'
-
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
 export function AppSidebar() {
-  const searchParams = useSearchParams()
+	const searchParams = useSearchParams();
 
-  const guildID = (searchParams) ? searchParams.get('guildID') : 'error'
+	const guildID = searchParams ? searchParams.get("guildID") : "error";
 
-  // Menu items.
-  const items = [
-    {
-      title: "General",
-      url: `/dashboard?guildID=${guildID}`,
-      icon: Home,
-    },
-    {
-      title: "Messages & Activity",
-      url: `/dashboard/messages?guildID=${guildID}`,
-      icon: Inbox,
-    },/* 
+	// Menu items.
+	const items = [
+		{
+			title: "General",
+			url: `/dashboard?guildID=${guildID}`,
+			icon: Home,
+		},
+		{
+			title: "Messages & Activity",
+			url: `/dashboard/messages?guildID=${guildID}`,
+			icon: Inbox,
+		} /* 
     {
       title: "Growth",
       url: `/dashboard/growth?guildID=${guildID}`,
       icon: ChartLine,
-    }, */
-  ]
-  return (
-    <Sidebar className="bg-white/4 backdrop-blur-md rounded-lg border border-white/0">
-      <SidebarHeader><a href='/'><img src="/logo-png.png" className="w-20 place-self-center"></img></a><hr></hr></SidebarHeader>
-      <SidebarContent>
-        <SidebarGroupLabel className="ml-1">Server Analytics</SidebarGroupLabel>
-        <SidebarGroupContent className="ml-3 w-50">
-          <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title} className="hover:bg-gradient-to-r from-white/0 to-white/10 rounded-sm transition-all">
-                <SidebarMenuButton asChild >
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarContent>
-      <SidebarFooter />
-    </Sidebar>
-  );
+    }, */,
+	];
+	return (
+		<Sidebar className="bg-white/4 backdrop-blur-md rounded-lg border border-white/0">
+			<SidebarHeader>
+				<a href="/">
+					<img src="/logo-png.png" className="w-20 place-self-center"></img>
+				</a>
+				<hr></hr>
+			</SidebarHeader>
+			<SidebarContent>
+				<SidebarGroupLabel className="ml-1">Server Analytics</SidebarGroupLabel>
+				<SidebarGroupContent className="ml-3 w-50">
+					<SidebarMenu>
+						{items.map((item) => (
+							<SidebarMenuItem
+								key={item.title}
+								className="hover:bg-gradient-to-r from-white/0 to-white/10 rounded-sm transition-all"
+							>
+								<SidebarMenuButton asChild>
+									<a href={item.url}>
+										<item.icon />
+										<span>{item.title}</span>
+									</a>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarContent>
+			<SidebarFooter />
+		</Sidebar>
+	);
 }
