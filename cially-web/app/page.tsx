@@ -1,10 +1,3 @@
-/* 
-GOING TO BE THE MAIN PAGE INSTEAD OF THE CURRENT ONE THAT REQUIRES GUILD ID INPUT 
-newFetchingPage ROUTE IS GOING TO BE REMOVED ONCE THIS IS READY
-*/
-
-import LoadingSVG from "./_components/_events/loading-page";
-import GuildNotFound from "./_components/_events/guildNotFound";
 import {
   Card,
   CardContent,
@@ -26,7 +19,7 @@ export default async function DataDashboard() {
   try {
 
     let guildData = [{ amount: 69 }]
-    let data = await fetch("http://localhost:6969/fetchGuilds")
+    let data = await fetch(`${BOT_API_URL}/fetchGuilds`)
     let dataJSON = (data) ? await data.json() : [{ error: "cant communicate" }]
     guildData = dataJSON
 
