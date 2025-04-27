@@ -22,4 +22,8 @@ COPY --chown=bot:nodejs . .
 
 USER bot
 
+EXPOSE 3001
+
+ENV PORT=3001
+
 CMD ["node", "index.js"]
