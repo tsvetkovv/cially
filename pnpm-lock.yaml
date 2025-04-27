@@ -7,19 +7,28 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       taze:
         specifier: ^19.0.4
         version: 19.0.4
 
   cially-bot:
     dependencies:
+      '@discordjs/rest':
+        specifier: ^2.5.0
+        version: 2.5.0
+      body-parser:
+        specifier: ^2.2.0
+        version: 2.2.0
       cfonts:
         specifier: ^3.3.0
         version: 3.3.0
       colors:
         specifier: ^1.4.0
         version: 1.4.0
+      discord-api-types:
+        specifier: ^0.38.1
+        version: 0.38.1
       discord.js:
         specifier: ^14.18.0
         version: 14.19.1
