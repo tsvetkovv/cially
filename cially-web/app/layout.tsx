@@ -3,36 +3,35 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/_shadcn/theme-provider";
 
-
 export const metadata: Metadata = {
-  title: "Cially Dashboard",
+	title: "Cially Dashboard",
 };
 
-import type { Viewport } from 'next'
- 
+import type { Viewport } from "next";
+
 export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-}
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
+};
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body className="bg-gr p-6 rounded-xl min-h-dvh">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
-  )
+	return (
+		<>
+			<html lang="en" suppressHydrationWarning>
+				<head />
+				<body className="min-h-dvh rounded-xl bg-gr p-6">
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="dark"
+						enableSystem
+						disableTransitionOnChange
+					>
+						{children}
+					</ThemeProvider>
+				</body>
+			</html>
+		</>
+	);
 }
