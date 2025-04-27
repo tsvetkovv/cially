@@ -1,8 +1,3 @@
-/* 
-GOING TO BE THE MAIN PAGE INSTEAD OF THE CURRENT ONE THAT REQUIRES GUILD ID INPUT 
-newFetchingPage ROUTE IS GOING TO BE REMOVED ONCE THIS IS READY
-*/
-
 "use client";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";

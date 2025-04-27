@@ -1,11 +1,3 @@
-"use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from 'next/navigation'
-import { redirect } from 'next/navigation'
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,73 +5,111 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+let BOT_API_URL = process.env.BOT_API_URL
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const formSchema = z.object({
-  guildID: z.string().min(2).max(50),
-  
-});
+export default async function DataDashboard() {
+  try {
 
-export default function Home() {
-  const router = useRouter()
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      guildID: "",
-    },
-  });
-  
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    redirect(`guild/?guildID=${values.guildID}`)
-    
+    let guildData = [{ amount: 69 }]
+    let data = await fetch(`${BOT_API_URL}/fetchGuilds`)
+    let dataJSON = (data) ? await data.json() : [{ error: "cant communicate" }]
+    guildData = dataJSON
+
+    if (guildData.code) {
+      return <GuildNotFound />
+    } else if (!guildData.AvailableGuilds) {
+      return <LoadingSVG />
+    } else {
+
+      let guildDataArray = guildData.AvailableGuilds
+      let guildLength = guildDataArray.length
+      let grid_column_number = (guildLength > 2) ? 3 : (guildLength > 1) ? 2 : 1
+      const gridClass = {
+        1: 'sm:grid-cols-1',
+        2: 'sm:grid-cols-2',
+        3: 'sm:grid-cols-3',
+      }[grid_column_number];
+
+
+      const guildCards = guildDataArray.map((guild) =>
+        (guild.in_db === true) ?
+          <a href={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/guild?guildID=${guild.id}`} key={guild.id}>
+            <Card className="hover:bg-white/2 transition-all mx-5">
+              <CardHeader className="place-items-center">
+                <Avatar className=" w-20 h-20">
+                  <AvatarImage src={guild.icon} />
+                  <AvatarFallback>Guild</AvatarFallback>
+                </Avatar>
+                <CardTitle className="mt-5">{guild.name}</CardTitle>
+              </CardHeader>
+            </Card>
+          </a>
+          :
+          <TooltipProvider key={guild.id}>
+            <Tooltip >
+              <TooltipTrigger>
+                <Card className="bg-red-400/10 hover:bg-red-400/7 transition-all mx-5 cursor-not-allowed" >
+                  <CardHeader className="place-items-center">
+                    <Avatar className=" w-20 h-20">
+                      <AvatarImage src={guild.icon} />
+                      <AvatarFallback>Guild</AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="mt-5">{guild.name}</CardTitle>
+                  </CardHeader>
+                </Card>
+              </TooltipTrigger>
+              <TooltipContent className="text-white">
+                <p>
+                  There is not enough data for this server! Please let the bot fetch some data and try again later!
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider >
+
+      );
+
+      return (
+        <>
+          <div className="w-20 place-self-center">
+            <img src="/logo-png.png"></img>
+          </div>
+          <div className="text-2xl  text-center">Available Guilds</div>
+          <div className="text-sm text-gray-400 text-center">Please Select the Guild you would like to view</div>
+
+          <div className="mb-15"></div>
+          <div className={`grid gap-y-5 grid-cols-1 ${gridClass} mx-10`}>{guildCards}</div>
+
+          <div className="text-center mt-15 text-xs text-gray-600 pb-5">
+            Thanks for using Cially Dashboard!
+          </div>
+        </>
+      )
+
+    }
+  } catch (err) {
+
+    // TODO add this error screen to every place where fetching occurs
+
+    return (
+      <>
+        <div className="w-20 place-self-center">
+          <img src="/logo-png.png"></img>
+        </div>
+        <div className="text-center">Looks like the Discord Bot can't communicate with the Dashboard.<br></br>
+          Please make sure that you followed the setup instructions correctly and that the bot is up and running!<br></br><br></br>
+          Are you facing other issues? Check our GitHub and seek support!<br></br>
+          <a href="https://github.com/skellgreco/cially" className="text-blue-400 underline">GitHub Redirect</a>
+        </div>
+      </>
+    )
   }
 
-  return (
-    <>
-    <div className="w-40 place-self-center">
-      <img src="/logo-png.png"></img>
-      </div>
-      <Card className="mx-10 mt-2">
-        <CardHeader>
-          <CardTitle className="text-center text-3xl">Cially</CardTitle>
-          <CardDescription className="text-center">
-            Please enter your info to proceed
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="guildID"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your Server ID</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ex. 1247194176638947389" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Right Click on your server -> Copy Server ID -> Paste Above
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="text-white">Submit</Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </>
-  );
 }
