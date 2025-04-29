@@ -13,6 +13,8 @@ import ActiveHours from "./_components/bottom-charts/active_hours";
 import ActiveUsers from "./_components/bottom-charts/active_users";
 
 let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+	
+// FIXME Error when there are no messages
 
 export default function MessagesDashboard() {
 	const searchParams = useSearchParams();
@@ -31,7 +33,7 @@ export default function MessagesDashboard() {
 	}, [guildID]);
 
 	if (chartData.notFound) {
-		return <GuildNotFound />;
+		return <GuildNotFound />
 	} else if (!chartData.finalData) {
 		return (
 			<div className="translate-x-100">

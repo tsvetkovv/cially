@@ -14,6 +14,9 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Badge } from "@/components/ui/badge"
+import { badgeVariants } from "@/components/ui/badge"
+
 
 export function AppSidebar() {
 	const searchParams = useSearchParams();
@@ -66,7 +69,10 @@ export function AppSidebar() {
 					</SidebarMenu>
 				</SidebarGroupContent>
 			</SidebarContent>
-			<SidebarFooter />
+			<SidebarFooter className="place-items-center">
+
+			<a href="https://github.com/skellgreco/cially"><Badge variant="secondary" className="">Version: 0.2.0</Badge></a>
+			</SidebarFooter>
 		</Sidebar>
 	);
 }
