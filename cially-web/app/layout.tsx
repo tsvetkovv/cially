@@ -21,15 +21,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
 		<>
 			<html lang="en" suppressHydrationWarning>
 				<head />
-				<body className="min-h-dvh rounded-xl bg-gr p-6">
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="dark"
-						enableSystem
-						disableTransitionOnChange
-					>
-						{children}
-					</ThemeProvider>
+				<body className="">
+					<div className="overflow-x-hidden min-h-screen">
+						<div className="bg-gr fixed inset-0 w-full h-full -z-10"></div>
+						<div className="relative z-0 p-6">
+							<ThemeProvider
+								attribute="class"
+								defaultTheme="dark"
+								enableSystem
+								disableTransitionOnChange
+							>
+								{children}
+							</ThemeProvider>
+						</div>
+					</div>
 				</body>
 			</html>
 		</>

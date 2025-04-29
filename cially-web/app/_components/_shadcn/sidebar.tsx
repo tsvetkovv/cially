@@ -31,15 +31,15 @@ export function AppSidebar() {
 			icon: Home,
 		},
 		{
-			title: "Messages & Activity",
+			title: "Messages",
 			url: `/dashboard/messages?guildID=${guildID}`,
 			icon: Inbox,
-		} /* 
+		},
     {
-      title: "Growth",
-      url: `/dashboard/growth?guildID=${guildID}`,
-      icon: ChartLine,
-    }, */,
+			title: "Activity",
+			url: `/dashboard/activity?guildID=${guildID}`,
+			icon: ChartLine,
+		},
 	];
 	return (
 		<Sidebar className="rounded-lg border border-white/0 bg-white/4 backdrop-blur-md">
@@ -71,7 +71,7 @@ export function AppSidebar() {
 			</SidebarContent>
 			<SidebarFooter className="place-items-center">
 
-			<a href="https://github.com/skellgreco/cially"><Badge variant="secondary" className="">Version: 0.2.0</Badge></a>
+				<a href="https://github.com/skellgreco/cially"><Badge variant="secondary" className="">Version: 0.2.0</Badge></a>
 			</SidebarFooter>
 		</Sidebar>
 	);

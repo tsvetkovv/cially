@@ -36,9 +36,9 @@ const chartConfig = {
 
 export default function ActiveUsers({ chartData }) {
 	return (
-		<Card className="h-full w-full">
+		<Card className="h-full w-full flex flex-col ">
 			<CardHeader>
-				<CardTitle>Most Active Users</CardTitle>
+				<CardTitle>Most Active Users (Messages)</CardTitle>
 				<CardDescription>Last 4 weeks</CardDescription>
 			</CardHeader>
 			<CardContent className="pb-2">
@@ -47,7 +47,7 @@ export default function ActiveUsers({ chartData }) {
 						accessibilityLayer
 						data={chartData}
 						layout="vertical"
-						margin={{ left: 100, right: 10 }}
+						margin={{ left: 10, right: 10 }}
 						barCategoryGap={20}
 					>
 						<YAxis
@@ -75,8 +75,8 @@ export default function ActiveUsers({ chartData }) {
 					</BarChart>
 				</ChartContainer>
 			</CardContent>
-			<CardFooter className="flex items-center justify-center gap-2 text-sm">
-				<div className="mt-24 font-medium">
+			<CardFooter className="mt-auto flex items-center justify-center gap-2 text-sm">
+				<div className="font-medium">
 					Most Active User:{" "}
 					<span className="ml-1 text-gray-300">{chartData[0].author}</span>
 				</div>

@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import GuildNotFound from "@/app/_components/_events/guildNotFound";
 import LoadingSVG from "@/app/_components/_events/loading-page";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import Last4Weeks from "./_components/_top-charts/last_4weeks";
-import Last7d from "./_components/_top-charts/last_7d";
-import Last24h from "./_components/_top-charts/last_24hrs";
-import ActiveChannels from "./_components/bottom-charts/active_channels";
-import ActiveHours from "./_components/bottom-charts/active_hours";
-import ActiveUsers from "./_components/bottom-charts/active_users";
+import Last4Weeks from "./_components/_message-charts/last_4weeks";
+import Last7d from "./_components/_message-charts/last_7d";
+import Last24h from "./_components/_message-charts/last_24hrs";
+import ActiveChannels from "../activity/_components/active_channels";
+import ActiveHours from "../activity/_components/active_hours";
+import ActiveUsers from "../activity/_components/active_users";
+import GeneralMessageDataCard from "./_components/_message-charts/general_data";
 
 let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
-	
+
 // FIXME Error when there are no messages
 
 export default function MessagesDashboard() {
@@ -59,7 +60,13 @@ export default function MessagesDashboard() {
 					<Last4Weeks chartData={data_4w} />
 				</div>
 
-				<div className="mt-10 ml-10 text-2xl">Activity Analytics</div>
+				<div className="ml-10 mr-5">
+					<GeneralMessageDataCard />
+				</div>
+
+
+
+				{/* <div className="mt-10 ml-10 text-2xl">Activity Analytics</div>
 				<hr className="mt-2 mr-5 ml-5 w-50 sm:w-dvh"></hr>
 
 				<div className="container mx-auto max-w-95 px-4 py-8 sm:max-w-240">
@@ -77,7 +84,7 @@ export default function MessagesDashboard() {
 						</div>
 						<ScrollBar orientation="horizontal" />
 					</ScrollArea>
-				</div>
+				</div> */}
 
 				<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
 					Thanks for using Cially Dashboard!
