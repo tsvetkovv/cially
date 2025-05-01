@@ -45,9 +45,8 @@ export default function MessagesDashboard() {
 		let data_24h = chartData.finalData[0].HourData;
 		let data_7d = chartData.finalData[0].WeekData;
 		let data_4w = chartData.finalData[0].FourWeekData;
-		let data_channels = chartData.finalData[0].ChannelData;
-		let data_users = chartData.finalData[0].ActiveUsersData;
-		let data_hours = chartData.finalData[0].ActiveHourData;
+		let data_general = chartData.finalData[0].GeneralData;
+		
 
 		return (
 			<>
@@ -61,30 +60,9 @@ export default function MessagesDashboard() {
 				</div>
 
 				<div className="ml-10 mr-5">
-					<GeneralMessageDataCard />
+					<GeneralMessageDataCard chartData={data_general} />
 				</div>
 
-
-
-				{/* <div className="mt-10 ml-10 text-2xl">Activity Analytics</div>
-				<hr className="mt-2 mr-5 ml-5 w-50 sm:w-dvh"></hr>
-
-				<div className="container mx-auto max-w-95 px-4 py-8 sm:max-w-240">
-					<ScrollArea className="w-full rounded-md border">
-						<div className="flex space-x-4 p-4">
-							<div className="min-w-[300px] flex-shrink-0">
-								<ActiveChannels chartData={data_channels} />
-							</div>
-							<div className="min-w-[300px] flex-shrink-0">
-								<ActiveHours chartData={data_hours} />
-							</div>
-							<div className="min-w-[300px] flex-shrink-0">
-								<ActiveUsers chartData={data_users} />
-							</div>
-						</div>
-						<ScrollBar orientation="horizontal" />
-					</ScrollArea>
-				</div> */}
 
 				<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
 					Thanks for using Cially Dashboard!

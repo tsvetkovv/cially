@@ -7,6 +7,7 @@ const pb = new PocketBase(url);
 
 let collection_name = process.env.MESSAGE_COLLECTION;
 let guild_collection_name = process.env.GUILDS_COLLECTION;
+let general_data_collection_name = process.env.GENERAL_DATA_COLLECTION;
 
 // Main GET Event
 export async function GET(
@@ -35,6 +36,8 @@ export async function GET(
 					filter: `guildID ?= "${guild.id}" && created>'${fourWeeksAgoDate_formatted}'`,
 					sort: "created",
 				});
+
+
 
 			fourWeeksMessagesLog.forEach((message) => {
 				let creation_date = String(message.created).slice(0, 19);
@@ -194,128 +197,29 @@ export async function GET(
 			});
 			fourWeekData = fourWeekData.toReversed();
 
-			let activeChannels = [];
+			const generalData = await pb
+				.collection(general_data_collection_name)
+				.getFirstListItem(`guildID ?= "${guild.id}"`)
 
-			monthlyMessages.forEach((message) => {
-				let channel = message.channelID;
-				let position = activeChannels.findIndex(
-					(item) => item.channel === channel,
-				);
-				if (position !== -1) {
-					activeChannels[position].amount = activeChannels[position].amount + 1;
-				} else {
-					activeChannels.push({ channel: channel, amount: 1 });
-				}
-			});
-			activeChannels.sort((a, b) => b.amount - a.amount);
-			activeChannels = activeChannels.slice(0, 5);
+			let generalDataArray = []
+			generalDataArray.push({
+				total_messages: generalData.total_messages,
+				message_deletions: generalData.message_deletions,
+				message_edits: generalData.message_edits,
+				total_attachments: generalData.total_attachments,
+				
+			})
 
-			let activeUsers = [];
+			console.log(generalDataArray)
 
-			monthlyMessages.forEach((message) => {
-				let messageAuthor = message.author;
-				let position = activeUsers.findIndex(
-					(item) => item.author === messageAuthor,
-				);
-				if (position !== -1) {
-					activeUsers[position].amount = activeUsers[position].amount + 1;
-				} else {
-					activeUsers.push({ author: messageAuthor, amount: 1 });
-				}
-			});
-			activeUsers.sort((a, b) => b.amount - a.amount);
-			activeUsers = activeUsers.slice(0, 5);
 
-			let activeHourData = [];
-
-			let o = 0;
-
-			while (o < 25) {
-				if (o < 10) {
-					activeHourData.push({ hour: `0${o}`, amount: 0 });
-				} else {
-					activeHourData.push({ hour: `${o}`, amount: 0 });
-				}
-				o = o + 1;
-			}
-
-			monthlyMessages.forEach((record) => {
-				let minutes = [record.created_formatted.slice(11, 13)];
-				minutes.forEach((minute) => {
-					let position = activeHourData.findIndex(
-						(item) => item.hour === minute,
-					);
-					if (position !== -1) {
-						activeHourData[position].amount =
-							activeHourData[position].amount + 1;
-					} else {
-						activeHourData.push({ hour: minute, amount: 1 });
-					}
-				});
-			});
-			// activeHourData = activeHourData.slice(0, 5)
-			activeHourData.sort((a, b) => a.hour - b.hour);
-
-			let discordDataOUT = [{ channels: [], users: [] }];
-			activeChannels.forEach((item) => {
-				discordDataOUT[0].channels.push(item.channel);
-			});
-			activeUsers.forEach((item) => {
-				discordDataOUT[0].users.push(item.author);
-			});
-
-			const discordDataIN_Req = await fetch(
-				`${process.env.BOT_API_URL}/fetchID/${guild.discordID}`,
-				{
-					body: JSON.stringify(discordDataOUT),
-					headers: {
-						"Content-Type": "application/json",
-					},
-					method: "POST",
-				},
-			);
-			const discordDataIN = await discordDataIN_Req.json();
-
-			const channelMap = {};
-			const userMap = {};
-
-			if (discordDataIN.newChannels && discordDataIN.newChannels.length > 0) {
-				discordDataIN.newChannels.forEach((channel) => {
-					channelMap[channel.id] = channel.name;
-				});
-			}
-
-			if (discordDataIN.newUsers && discordDataIN.newUsers.length > 0) {
-				discordDataIN.newUsers.forEach((user) => {
-					userMap[user.id] = user.name;
-				});
-			}
-
-			activeChannels = activeChannels.map((channel) => {
-				return {
-					channel: channelMap[channel.channel] || channel.channel,
-					originalId: channel.channel,
-					amount: channel.amount,
-				};
-			});
-
-			activeUsers = activeUsers.map((user) => {
-				return {
-					author: userMap[user.author] || user.author,
-					originalId: user.author,
-					amount: user.amount,
-				};
-			});
 
 			let finalData = [];
 			finalData.push({
 				HourData: hourData,
 				WeekData: weekData,
 				FourWeekData: fourWeekData,
-				ChannelData: activeChannels,
-				ActiveUsersData: activeUsers,
-				ActiveHourData: activeHourData,
-				ID: discordDataIN,
+				GeneralData: generalDataArray,
 			});
 
 			return Response.json({ finalData });

@@ -32,24 +32,6 @@ module.exports = {
 		}
 
 
-			//Logs
-			/* debug({
-				text: `New Message: \nAuthor: ${message.author.username}\nGuild: ${message.guild.name}, ${message.guild.id}\nMessage ID: ${message.id} \nMessage Length: ${totalWords.length} \nChannel: ${message.channel.name}, ${message.channelId}\nAttachments: ${message.attachments.toJson}`,
-			});
-
-			// HTTP
-			let info = {
-				guildID: message.guild.id,
-				messageID: message.id,
-				messageLength: totalWords.length,
-				channelID: message.channelId,
-				authorID: message.author.id,
-			};
-			sendPostRequest({
-				data: info,
-				guildId: message.guild.id,
-				type: module.exports.name,
-			}); */
 		}
 	
 };

@@ -22,10 +22,11 @@ export default function MessagesDashboard() {
     useEffect(() => {
         async function fetchData() {
             let chartDataReceived = await fetch(
-                `${WEBSITE_URL}/api/server/${guildID}/fetchMessageData`,
+                `${WEBSITE_URL}/api/server/${guildID}/fetchActivityData`,
             );
             let json = await chartDataReceived.json();
             setChartData(json);
+            console.log(json)
         }
         fetchData();
     }, [guildID]);
