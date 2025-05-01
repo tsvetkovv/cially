@@ -17,9 +17,17 @@ module.exports = {
 				.split(/\s+/)
 				.filter((word) => word.length > 0);
 
+			// Get the number of images/videos
+			const mediaAttachments = message.attachments.filter(attachment => {
+				const type = attachment.contentType || '';
+				return type.startsWith('image/') || type.startsWith('video/');
+			});
+			const totalMedia = mediaAttachments.size
+			
+
 			//Logs
 			debug({
-				text: `New Message: \nAuthor: ${message.author.username}\nGuild: ${message.guild.name}, ${message.guild.id}\nMessage ID: ${message.id} \nMessage Length: ${totalWords.length} \nChannel: ${message.channel.name}, ${message.channelId}\nAttachments: ${message.attachments.toJson}`,
+				text: `New Message: \nAuthor: ${message.author.username}\nGuild: ${message.guild.name}, ${message.guild.id}\nMessage ID: ${message.id} \nMessage Length: ${totalWords.length} \nChannel: ${message.channel.name}, ${message.channelId}\nAttachments: ${totalMedia}`,
 			});
 
 			// HTTP
@@ -29,6 +37,7 @@ module.exports = {
 				messageLength: totalWords.length,
 				channelID: message.channelId,
 				authorID: message.author.id,
+				attachments: totalMedia
 			};
 			sendPostRequest({
 				data: info,

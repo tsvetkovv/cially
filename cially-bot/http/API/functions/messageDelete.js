@@ -1,0 +1,76 @@
+const { debug } = require("../../../terminal/debug");
+const { error } = require("../../../terminal/error");
+
+const PocketBase = require("pocketbase/cjs");
+const url = process.env.POCKETBASE_URL;
+const pb = new PocketBase(url);
+const guild_collection_name = process.env.GUILD_COLLECTION;
+let collection_name = process.env.GENERAL_DATA_GUILD_COLLECTION;
+const { registerGuild } = require("./logic/registerGuild");
+
+async function messageDelete(req, res, client) {
+	let body = req.body;
+	const { guildID } = body;
+
+	debug({ text: `New POST req: \n${JSON.stringify(body)}` });
+
+	const roger = {
+		res: `Message Deletion Received with the following details: GI: ${guildID}`,
+	};
+
+	// Database Logic
+	try {
+		const guild = await pb
+			.collection(guild_collection_name)
+			.getFirstListItem(`discordID='${guildID}'`, {});
+		debug({ text: `Guild has been found and is ready to add data to it` });
+
+
+		try {
+			let pb_guildID = await guild.id
+
+			const guild_data = await pb
+				.collection(collection_name)
+				.getFirstListItem(`guildID ?= "${pb_guildID}"`, {});
+			debug({ text: `Guild Data Item has been found and is ready to add data to it` });
+
+
+			let new_general_data = {
+				"message_deletions": guild_data.message_deletions + 1,
+
+			}
+
+			const newGeneralData = await pb.collection(`${collection_name}`).update(`${guild_data.id}`, new_general_data)
+			debug({
+				text: `General Guild Data has been updated in the database`,
+			});
+		} catch (err) {
+			console.log(err)
+			if (err.status === 404) {
+				registerGuildData(guild.id);
+			} else {
+				debug({ text: `Failed to communicate with the Database: \n${err}` });
+
+				error({ text: `[ERROR] Error Code: ${err.status}` });
+			}
+		}
+	} catch (err) {
+		// 404 error -> guild is not on the database. Attempt to add it
+		if (err.status === 404) {
+			registerGuild(guildID);
+		} else {
+			debug({ text: `Failed to communicate with the Database: \n${err}` });
+
+			error({ text: `[ERROR] Error Code: ${err.status}` });
+		}
+	}
+
+	debug({
+		text: `End of logic. Stopping the communication and returning a res to the Bot`,
+	});
+
+	// Express response
+	return res.status(201).json(roger);
+}
+
+module.exports = { messageDelete };
