@@ -36,6 +36,22 @@ async function syncGuild(req, res, client) {
 								let owner = await Guild.fetchOwner();
 								let icon_url = await Guild.iconURL();
 								let vanity_url = Guild.vanityURLCode;
+
+								await Guild.members.fetch();
+								const statusCount = {
+									online: 0,
+									idle: 0,
+									dnd: 0,
+									offline: 0,
+								};
+
+								Guild.members.cache.forEach(member => {
+									const status = member.presence?.status || 'offline';
+									if (statusCount[status] !== undefined) {
+										statusCount[status]++;
+									}
+								});
+
 								function fetchVanityData() {
 									return Guild.fetchVanityData()
 										.then((res) => {
@@ -62,6 +78,9 @@ async function syncGuild(req, res, client) {
 									description: Guild.description,
 									vanity_url: vanity_url,
 									vanity_uses: vanity_uses,
+									online: statusCount.online + statusCount.dnd,
+									offline: statusCount.offline,
+									idle: statusCount.idle
 								};
 								try {
 									const updatedRecord = await pb

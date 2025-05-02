@@ -203,12 +203,18 @@ export async function GET(
 				};
 			});
 
+			let generalData = [{online: guild.online, idle: guild.idle, offline: guild.offline, total: guild.members}]
+
+
+
 			let finalData = [];
 			finalData.push({
 				ChannelData: activeChannels,
 				ActiveUsersData: activeUsers,
 				ActiveHourData: activeHourData,
 				ID: discordDataIN,
+				GeneralData: generalData
+				
 			});
 
 			return Response.json({ finalData });

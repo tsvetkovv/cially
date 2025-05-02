@@ -5,7 +5,6 @@ const PocketBase = require("pocketbase/cjs");
 const url = process.env.POCKETBASE_URL;
 const pb = new PocketBase(url);
 const guild_collection_name = process.env.GUILD_COLLECTION;
-let collection_name = process.env.GENERAL_DATA_GUILD_COLLECTION;
 const { registerGuild } = require("./logic/registerGuild");
 
 async function messageEdit(req, res, client) {
@@ -26,34 +25,15 @@ async function messageEdit(req, res, client) {
 		debug({ text: `Guild has been found and is ready to add data to it` });
 
 
-		try {
-			let pb_guildID = await guild.id
+		let new_general_data = {
+			"message_edits": guild.message_edits + 1,
 
-			const guild_data = await pb
-				.collection(collection_name)
-				.getFirstListItem(`guildID ?= "${pb_guildID}"`, {});
-			debug({ text: `Guild Data Item has been found and is ready to add data to it` });
-
-
-			let new_general_data = {
-				"message_edits": guild_data.message_edits + 1,
-
-			}
-
-			const newGeneralData = await pb.collection(`${collection_name}`).update(`${guild_data.id}`, new_general_data)
-			debug({
-				text: `General Guild Data has been updated in the database`,
-			});
-		} catch (err) {
-			console.log(err)
-			if (err.status === 404) {
-				registerGuildData(guild.id);
-			} else {
-				debug({ text: `Failed to communicate with the Database: \n${err}` });
-
-				error({ text: `[ERROR] Error Code: ${err.status}` });
-			}
 		}
+
+		const newGeneralData = await pb.collection(`${guild_collection_name}`).update(`${guild.id}`, new_general_data)
+		debug({
+			text: `General Guild Data has been updated in the database`,
+		});
 	} catch (err) {
 		// 404 error -> guild is not on the database. Attempt to add it
 		if (err.status === 404) {

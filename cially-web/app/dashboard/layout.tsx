@@ -4,7 +4,7 @@ import { AppSidebar } from "../_components/_shadcn/sidebar";
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<SidebarProvider>
-			<AppSidebar />
+			<AppSidebar isGuild={true}/>
 			<main>
 				<SidebarTrigger className="sm:hidden" />
 				{children}

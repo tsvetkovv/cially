@@ -43,6 +43,7 @@ export default function MessagesDashboard() {
         let data_channels = chartData.finalData[0].ChannelData;
         let data_users = chartData.finalData[0].ActiveUsersData;
         let data_hours = chartData.finalData[0].ActiveHourData;
+        let data_general = chartData.finalData[0].GeneralData;
 
         return (
             <>
@@ -65,7 +66,7 @@ export default function MessagesDashboard() {
                         <ActiveHours chartData={data_hours} />
 
                         <div className="mt-5">
-                            <GeneralActivityData />
+                            <GeneralActivityData chartData={data_general} />
 
                         </div>
 

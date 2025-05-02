@@ -83,8 +83,8 @@ export default async function DataDashboard() {
           </div>
           <div className="text-2xl  text-center">Available Guilds</div>
           <div className="text-sm text-gray-400 text-center">Please Select the Guild you would like to view</div>
-
-          <div className="mb-15"></div>
+          
+          <div className="mb-10"></div>
           <div className={`grid gap-y-5 grid-cols-1 ${gridClass} mx-10`}>{guildCards}</div>
 
           <div className="text-center mt-15 text-xs text-gray-600 pb-5">

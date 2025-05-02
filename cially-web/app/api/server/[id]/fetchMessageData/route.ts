@@ -7,7 +7,6 @@ const pb = new PocketBase(url);
 
 let collection_name = process.env.MESSAGE_COLLECTION;
 let guild_collection_name = process.env.GUILDS_COLLECTION;
-let general_data_collection_name = process.env.GENERAL_DATA_COLLECTION;
 
 // Main GET Event
 export async function GET(
@@ -197,16 +196,14 @@ export async function GET(
 			});
 			fourWeekData = fourWeekData.toReversed();
 
-			const generalData = await pb
-				.collection(general_data_collection_name)
-				.getFirstListItem(`guildID ?= "${guild.id}"`)
+			
 
 			let generalDataArray = []
 			generalDataArray.push({
-				total_messages: generalData.total_messages,
-				message_deletions: generalData.message_deletions,
-				message_edits: generalData.message_edits,
-				total_attachments: generalData.total_attachments,
+				total_messages: guild.total_messages,
+				message_deletions: guild.message_deletions,
+				message_edits: guild.message_edits,
+				total_attachments: guild.total_attachments,
 				
 			})
 
