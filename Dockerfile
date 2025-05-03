@@ -44,8 +44,9 @@ COPY --from=build-web --chown=cially:cially /app/cially-web/.next/standalone ./
 COPY --from=build-web --chown=cially:cially /app/cially-web/.next/static ./.next/static
 USER cially
 EXPOSE 3000
+ENV NODE_PATH=/app/node_modules
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
+CMD ["node", "cially-web/server.js"]
