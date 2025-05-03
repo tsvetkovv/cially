@@ -2,5 +2,8 @@ packages:
   - cially-bot
   - cially-web
 
+syncInjectedDepsAfterScripts: true
+injectWorkspacePackages: true
+
 onlyBuiltDependencies:
   - sharp
