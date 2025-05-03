@@ -6,7 +6,7 @@ RUN corepack enable
 
 # ---- Install dependencies (shared cache) ----
 FROM base AS deps
-WORKDIR /repo
+WORKDIR /app
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY cially-bot/package.json cially-bot/
 COPY cially-web/package.json cially-web/
@@ -14,16 +14,15 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 # ---- Build cially-bot ----
 FROM deps AS build-bot
-WORKDIR /repo
+WORKDIR /app
 COPY . .
 RUN pnpm deploy --filter=cially-bot --prod /prod/cially-bot
 
 # ---- Build cially-web ----
 FROM deps AS build-web
-WORKDIR /repo
+WORKDIR /app
 COPY . .
 RUN pnpm run --filter=cially-web build
-RUN pnpm deploy --filter=cially-web --prod /prod/cially-web
 
 # ---- cially-bot image ----
 FROM base AS cially-bot
@@ -40,7 +39,9 @@ CMD ["node", "index.js"]
 FROM base AS cially-web
 WORKDIR /app
 RUN addgroup --system cially && adduser --system --ingroup cially cially
-COPY --from=build-web /prod/cially-web .
+COPY --from=build-web --chown=cially:cially /app/cially-web/public ./public
+COPY --from=build-web --chown=cially:cially /app/cially-web/.next/standalone ./
+COPY --from=build-web --chown=cially:cially /app/cially-web/.next/static ./.next/static
 USER cially
 EXPOSE 3000
 ENV NODE_ENV=production
