@@ -2,7 +2,8 @@ packages:
   - cially-bot
   - cially-web
 
-syncInjectedDepsAfterScripts: true
+syncInjectedDepsAfterScripts:
+  - build
 injectWorkspacePackages: true
 
 onlyBuiltDependencies:
