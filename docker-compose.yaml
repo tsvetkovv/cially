@@ -46,7 +46,7 @@ services:
       - cially-network
 
   pocketbase:
-    image: ghcr.io/skellgreco/pocketbase:latest
+    image: ghcr.io/skellgreco/cially-pocketbase:latest
     container_name: pocketbase
     restart: unless-stopped
     volumes:
