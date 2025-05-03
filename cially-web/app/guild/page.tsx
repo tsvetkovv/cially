@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { MessageChart } from "@/app/_components/_dashboard/chart-preview";
 import GuildNotFound from "../_components/_events/guildNotFound";
 import LoadingSVG from "../_components/_events/loading-page";
+import { Suspense } from "react";
+
 
 let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
-export default function DataDashboard() {
+function ClientComponent() {
 	const searchParams = useSearchParams();
 	const guildID = searchParams.get("guildID");
 	const [chartData, setChartData] = useState([{ amount: 69 }]);
@@ -33,3 +35,11 @@ export default function DataDashboard() {
 		redirect(`dashboard?guildID=${guildID}`);
 	}
 }
+
+export default function DataDashboard() {
+	return (
+	  <Suspense fallback={<LoadingSVG />}>
+		<ClientComponent />
+	  </Suspense>
+	);
+  }

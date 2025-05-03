@@ -16,9 +16,17 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge"
 import { badgeVariants } from "@/components/ui/badge"
-
+import { Suspense } from "react";
 
 export function AppSidebar({ isGuild }) {
+	return (
+		<Suspense>
+			<ClientComponent isGuild={isGuild} />
+		</Suspense>
+	)
+}
+
+function ClientComponent({ isGuild }) {
 	const searchParams = useSearchParams();
 
 	const guildID = searchParams ? searchParams.get("guildID") : "error";
