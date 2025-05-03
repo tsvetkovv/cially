@@ -4,9 +4,11 @@ FROM node:22-alpine as base
 FROM base as deps
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+# Update COPY command to use pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm ci
+# Use pnpm to install dependencies
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
 
 FROM base as runner

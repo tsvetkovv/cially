@@ -5,9 +5,13 @@ FROM base as deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm ci
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Use pnpm to install dependencies
+RUN pnpm install --frozen-lockfile
 
 
 FROM base as builder
