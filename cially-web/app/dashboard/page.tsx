@@ -1,52 +1,53 @@
 import BottomCard from "./_main-components/bottom-card";
 import MemberBlock from "./_main-components/member-card";
 import MessagesBlock from "./_main-components/messages-card";
-let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL
+
+let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
 export default async function Dashboard({
-  searchParams,
+	searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const guildID = (await searchParams).guildID;
+	const guildID = (await searchParams).guildID;
 
-  let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`)
-  let data = await API_REQ.json()
+	let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`);
+	let data = await API_REQ.json();
 
-  let guild = data.guildFound[0];
-  const date = new Date();
-  let new_date = date.toLocaleString('en-US')
-  let welcome_message = (String(new_date).includes('AM')) ? "Good Morning" : "Good Evening"
+	let guild = data.guildFound[0];
+	const date = new Date();
+	let new_date = date.toLocaleString("en-US");
+	let welcome_message = String(new_date).includes("AM")
+		? "Good Morning"
+		: "Good Evening";
 
-  return (
-    <>
-      <div className="grid grid-rows-3 sm:grid-rows-none ml-10 mt-10 sm:min-w-dvh mr-4">
-        <div>
-          <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-8 rows-span-1 ">
-            <div className="sm:col-span-2 text-4xl ">
-              {welcome_message}
-              <div className="text-gray-400 text-xs font-normal mt-2">
-                Currently viewing {guild.name}
-              </div>
-            </div>
-            <div className="sm:col-start-4 sm:col-span-2 mr-4">
-              <MemberBlock guild={guild} />
-            </div>
-            <div className="sm:col-start-6 sm:col-span-2 mr-4">
-              <MessagesBlock guild={guild} />
-            </div>
-          </div>
-        </div>
+	return (
+		<>
+			<div className="mt-10 mr-4 ml-10 grid grid-rows-3 sm:min-w-dvh sm:grid-rows-none">
+				<div>
+					<div className="rows-span-1 grid grid-rows-3 sm:grid-cols-8 sm:grid-rows-none ">
+						<div className="text-4xl sm:col-span-2 ">
+							{welcome_message}
+							<div className="mt-2 font-normal text-gray-400 text-xs">
+								Currently viewing {guild.name}
+							</div>
+						</div>
+						<div className="mr-4 sm:col-span-2 sm:col-start-4">
+							<MemberBlock guild={guild} />
+						</div>
+						<div className="mr-4 sm:col-span-2 sm:col-start-6">
+							<MessagesBlock guild={guild} />
+						</div>
+					</div>
+				</div>
 
-        <div className="row-span-3 sm:row-span-1">
-          <BottomCard guild={guild} />
-          <div className="text-center mt-5 text-xs text-gray-600 pb-5">
-          Thanks for using Cially Dashboard!
-        </div>
-        </div>
-        
-      </div>
-      
-    </>
-  );
+				<div className="row-span-3 sm:row-span-1">
+					<BottomCard guild={guild} />
+					<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
+						Thanks for using Cially Dashboard!
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }

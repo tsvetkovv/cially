@@ -1,4 +1,19 @@
-cially-bot/node_modules
-cially-bot/.env
-pocketbase/pb_data
+# Node dependencies
 node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Pocketbase
+pocketbase/pb_data

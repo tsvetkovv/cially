@@ -1,91 +1,83 @@
 "use client";
 
-import Last24h from "./_components/_top-charts/last_24hrs"
-import Last7d from "./_components/_top-charts/last_7d"
-import Last4Weeks from "./_components/_top-charts/last_4weeks"
-import ActiveChannels from "./_components/bottom-charts/active_channels"
-import ActiveUsers from "./_components/bottom-charts/active_users"
-import ActiveHours from "./_components/bottom-charts/active_hours"
-
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import LoadingSVG from "@/app/_components/_events/loading-page";
+import { useEffect, useState } from "react";
 import GuildNotFound from "@/app/_components/_events/guildNotFound";
+import LoadingSVG from "@/app/_components/_events/loading-page";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Last4Weeks from "./_components/_message-charts/last_4weeks";
+import Last7d from "./_components/_message-charts/last_7d";
+import Last24h from "./_components/_message-charts/last_24hrs";
+import ActiveChannels from "../activity/_components/active_channels";
+import ActiveHours from "../activity/_components/active_hours";
+import ActiveUsers from "../activity/_components/active_users";
+import GeneralMessageDataCard from "./_components/_message-charts/general_data";
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL
+let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
-export default function MessagesDashboard() {
-    const searchParams = useSearchParams();
-    const guildID = searchParams.get("guildID");
-    const [chartData, setChartData] = useState([{ amount: 69 }]);
+// FIXME Error when there are no messages
 
-    useEffect(() => {
+import { Suspense } from "react";
 
-        async function fetchData() {
-            let chartDataReceived = await fetch(
-                `${WEBSITE_URL}/api/server/${guildID}/fetchMessageData`);
-            let json = await chartDataReceived.json();
-            setChartData(json);
+export default function MessagesActivityPage() {
+	return (
+		<Suspense>
+			<ClientComponent />
+		</Suspense>
+	)
+}
 
-        }
-        fetchData();
-    }, []);
+function ClientComponent() {
+	const searchParams = useSearchParams();
+	const guildID = searchParams.get("guildID");
+	const [chartData, setChartData] = useState([{ amount: 69 }]);
 
-    if (chartData.notFound) {
-        return <GuildNotFound />
-    } else if (!chartData.finalData) {
-        return <div className="translate-x-100">
-            <LoadingSVG />
-        </div>
-    } else {
-        let data_24h = chartData.finalData[0].HourData
-        let data_7d = chartData.finalData[0].WeekData
-        let data_4w = chartData.finalData[0].FourWeekData
-        let data_channels = chartData.finalData[0].ChannelData
-        let data_users = chartData.finalData[0].ActiveUsersData
-        let data_hours = chartData.finalData[0].ActiveHourData
+	useEffect(() => {
+		async function fetchData() {
+			let chartDataReceived = await fetch(
+				`${WEBSITE_URL}/api/server/${guildID}/fetchMessageData`,
+			);
+			let json = await chartDataReceived.json();
+			setChartData(json);
+		}
+		fetchData();
+	}, [guildID]);
+
+	if (chartData.notFound) {
+		return <GuildNotFound />
+	} else if (!chartData.finalData) {
+		return (
+			<div className="translate-x-100">
+				<LoadingSVG />
+			</div>
+		);
+	} else {
+		let data_24h = chartData.finalData[0].HourData;
+		let data_7d = chartData.finalData[0].WeekData;
+		let data_4w = chartData.finalData[0].FourWeekData;
+		let data_general = chartData.finalData[0].GeneralData;
+		
+
+		return (
+			<>
+				<div className="mt-10 ml-10 text-2xl">Messages Analytics</div>
+				<hr className="mt-2 mr-5 ml-5 w-50 sm:w-dvh"></hr>
+
+				<div className="mt-10 ml-8 grid max-w-80 grid-rows-3 gap-y-4 sm:mr-5 sm:ml-10 sm:max-w-full sm:grid-cols-3 sm:grid-rows-none sm:gap-x-3 sm:gap-y-0">
+					<Last24h chartData={data_24h} />
+					<Last7d chartData={data_7d} />
+					<Last4Weeks chartData={data_4w} />
+				</div>
+
+				<div className="ml-10 mr-5">
+					<GeneralMessageDataCard chartData={data_general} />
+				</div>
 
 
-        return (
-            <>
-                <div className="text-2xl mt-10 ml-10">Messages Analytics</div>
-                <hr className="ml-5 mt-2 w-50 sm:w-dvh mr-5"></hr>
-
-                <div className="grid grid-rows-3 sm:grid-rows-none sm:grid-cols-3 max-w-80 sm:max-w-full mt-10 sm:ml-10 ml-8 gap-y-4 sm:gap-y-0 sm:gap-x-3 sm:mr-5">
-
-                    <Last24h chartData={data_24h} />
-                    <Last7d chartData={data_7d} />
-                    <Last4Weeks chartData={data_4w} />
-
-                </div>
-
-                <div className="text-2xl mt-10 ml-10">Activity Analytics</div>
-                <hr className="ml-5 mt-2 w-50 sm:w-dvh mr-5"></hr>
-
-
-                <div className="container mx-auto px-4 py-8 max-w-95 sm:max-w-240">
-                    <ScrollArea className="w-full rounded-md border">
-                        <div className="flex space-x-4 p-4">
-                            <div className="min-w-[300px] flex-shrink-0">
-                                <ActiveChannels chartData={data_channels} />
-                            </div>
-                            <div className="min-w-[300px] flex-shrink-0">
-                                <ActiveHours chartData={data_hours} />
-                            </div>
-                            <div className="min-w-[300px] flex-shrink-0">
-                                <ActiveUsers chartData={data_users} />
-                            </div>
-                        </div>
-                        <ScrollBar orientation="horizontal" />
-                    </ScrollArea>
-                </div>
-
-                <div className="text-center mt-5 text-xs text-gray-600 pb-5">
-                    Thanks for using Cially Dashboard!
-                </div>
-            </>
-        )
-    }
-
+				<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
+					Thanks for using Cially Dashboard!
+				</div>
+			</>
+		);
+	}
 }
