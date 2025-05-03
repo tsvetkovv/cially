@@ -3,7 +3,7 @@
 </p>
 
 # 🪼 Cially
-Cially is an open source dashboard that allows you to view detailed insights regarding your [Discord](https://discord.com) Server! New Updates are going to be released every month!
+Cially is an open source dashboard that allows you to view detailed insights regarding your [Discord](https://discord.com) Server!
 
 ## 🐚 Features
 - [x] Shows the name, description, icon and current members
@@ -17,19 +17,26 @@ Cially is an open source dashboard that allows you to view detailed insights reg
   - [x] Messages sent per hour
   - [x] Messages sent per day
   - [x] Messages sent per week
+  - [x] Total Messages Ever Sent
+  - [x] Tota Media (Photos/Videos) ever sent
+  - [x] Total Message Deletions
+  - [x] Total Message Edits
 - [x] Shows Activity Data
   - [x] Most Active Channels
   - [x] Most Active Users
   - [x] Most Active Hours
+  - [x] Total Online/Idle/Offline Members
 - [x] Beautiful User Friendly UI
 - [x] Responsive for every device
 - [ ] More Features to come in the future...
 
 ## 🐟 Screenshots
-![image](https://github.com/user-attachments/assets/2c9ff0bf-530d-4182-bdef-6bb4abe0ddd9)
-![image](https://github.com/user-attachments/assets/29f2d677-9b41-4cde-aa64-b983b12cd2fd)
-![image](https://github.com/user-attachments/assets/ad91a09f-6e35-4330-9f0a-5106c5a84d8b)
-![image](https://github.com/user-attachments/assets/8b917bc0-6548-4dcc-93ec-0012c3f95200)
+![image](https://github.com/user-attachments/assets/aaa15308-971c-4e19-9808-25a000272a30)
+![image](https://github.com/user-attachments/assets/ed313c80-2c89-48ac-9e3d-75c3e818d94f)
+![image](https://github.com/user-attachments/assets/8ae543af-094f-4f1a-9313-3f3cd95609a7)
+![image](https://github.com/user-attachments/assets/8bf8ccf8-9e7a-4e04-987a-89d8eb39a0ea)
+![image](https://github.com/user-attachments/assets/ab4e8216-6e18-488f-b592-fbef82d8eb3a)
+
 
 ## 🐠 How it works
 Cially Dashboard is powered by a Discord Bot, a full-stack Next.js application, and Pocketbase as the backend. The Discord Bot actively listens to all events happening on your server and logs them to the database via its own API.
@@ -37,8 +44,9 @@ The web application then retrieves this data from the database to display detail
 All ongoing synchronization and data enrichment—such as resolving names or syncing recent activity—is handled seamlessly between the bot and the website.
 
 ## 🪸 How to run
+### There is a Docker Image inlcuded in the Source Code! However, please take a look at the Manual Installation Instructions bellow for futher information regarding setting Cially up!
 ### Pocketbase Instance
-1. Install [Pocketbase 0.26.0](https://github.com/pocketbase/pocketbase/releases/tag/v0.26.6) (the .exe file is included in the /pocketbase directory)
+1. Install [Pocketbase 0.26.0](https://github.com/pocketbase/pocketbase/releases/tag/v0.26.6)
 2. Run `./pocketbase serve` to start the backend
 3. Open the URL displayed on your terminal and create an admin account
 4. Go to Settings -> Import -> Load from JSON file

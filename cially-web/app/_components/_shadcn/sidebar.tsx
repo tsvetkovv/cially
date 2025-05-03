@@ -1,66 +1,122 @@
-"use client"
+"use client";
 
-import { Calendar, Home, Inbox, ChartLine } from "lucide-react"
-
+import { Calendar, ChartLine, Home, Inbox, Bolt, SatelliteDish, House } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
-} from "@/components/ui/sidebar"
-import { useSearchParams } from 'next/navigation'
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Badge } from "@/components/ui/badge"
+import { badgeVariants } from "@/components/ui/badge"
 
 
-export function AppSidebar() {
-  const searchParams = useSearchParams()
+export function AppSidebar({ isGuild }) {
+	const searchParams = useSearchParams();
 
-  const guildID = (searchParams) ? searchParams.get('guildID') : 'error'
+	const guildID = searchParams ? searchParams.get("guildID") : "error";
 
-  // Menu items.
-  const items = [
-    {
-      title: "General",
-      url: `/dashboard?guildID=${guildID}`,
-      icon: Home,
-    },
-    {
-      title: "Messages & Activity",
-      url: `/dashboard/messages?guildID=${guildID}`,
-      icon: Inbox,
-    },/* 
-    {
-      title: "Growth",
-      url: `/dashboard/growth?guildID=${guildID}`,
-      icon: ChartLine,
-    }, */
-  ]
-  return (
-    <Sidebar className="bg-white/4 backdrop-blur-md rounded-lg border border-white/0">
-      <SidebarHeader><a href='/'><img src="/logo-png.png" className="w-20 place-self-center"></img></a><hr></hr></SidebarHeader>
-      <SidebarContent>
-        <SidebarGroupLabel className="ml-1">Server Analytics</SidebarGroupLabel>
-        <SidebarGroupContent className="ml-3 w-50">
-          <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title} className="hover:bg-gradient-to-r from-white/0 to-white/10 rounded-sm transition-all">
-                <SidebarMenuButton asChild >
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarContent>
-      <SidebarFooter />
-    </Sidebar>
-  );
+	// Analytics items
+	const items = [
+		{
+			title: "General",
+			url: `/dashboard?guildID=${guildID}`,
+			icon: Home,
+		},
+		{
+			title: "Messages",
+			url: `/dashboard/messages?guildID=${guildID}`,
+			icon: Inbox,
+		},
+		{
+			title: "Activity",
+			url: `/dashboard/activity?guildID=${guildID}`,
+			icon: ChartLine,
+		},
+	];
+
+	// Cially items
+	const cially_items = [
+		{
+			title: "Home",
+			url: `/`,
+			icon: House,
+		},
+		{
+			title: "Settings",
+			url: `/cially/settings`,
+			icon: Bolt,
+		},
+		{
+			title: "Status",
+			url: `/cially/status`,
+			icon: SatelliteDish,
+		},
+
+	];
+	return (
+		<Sidebar className="rounded-lg border border-white/0 bg-white/4 backdrop-blur-md">
+			<SidebarHeader>
+				<a href="/">
+					<img src="/logo-png.png" className="w-20 place-self-center"></img>
+				</a>
+				<hr></hr>
+			</SidebarHeader>
+			<SidebarContent>
+				{
+					(isGuild) ? <div className=" mb-8">
+
+						<SidebarGroupLabel className="ml-1">Server Analytics</SidebarGroupLabel>
+						<SidebarGroupContent className="ml-3 w-50">
+							<SidebarMenu>
+								{items.map((item) => (
+									<SidebarMenuItem
+										key={item.title}
+										className="rounded-sm from-white/0 to-white/10 transition-all hover:bg-gradient-to-r"
+									>
+										<SidebarMenuButton asChild>
+											<a href={item.url}>
+												<item.icon />
+												<span>{item.title}</span>
+											</a>
+										</SidebarMenuButton>
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</div> : <div></div>
+				}
+
+				<SidebarGroupLabel className="ml-1">Dashboard</SidebarGroupLabel>
+				<SidebarGroupContent className="ml-3 w-50">
+					<SidebarMenu>
+						{cially_items.map((item) => (
+							<SidebarMenuItem
+								key={item.title}
+								className="rounded-sm from-white/0 to-white/10 transition-all hover:bg-gradient-to-r"
+							>
+								<SidebarMenuButton asChild>
+									<a href={item.url}>
+										<item.icon />
+										<span>{item.title}</span>
+									</a>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarContent>
+			<SidebarFooter className="place-items-center">
+
+				<a href="https://github.com/skellgreco/cially"><Badge variant="secondary" className="">Version: 0.2.0</Badge></a>
+			</SidebarFooter>
+		</Sidebar>
+	);
 }
