@@ -39,9 +39,9 @@ CMD ["node", "index.js"]
 FROM base AS cially-web
 WORKDIR /app
 RUN addgroup --system cially && adduser --system --ingroup cially cially
-COPY --from=build-web --chown=cially:cially /app/cially-web/public ./public
+COPY --from=build-web --chown=cially:cially /app/cially-web/public ./cially-web/public
 COPY --from=build-web --chown=cially:cially /app/cially-web/.next/standalone ./
-COPY --from=build-web --chown=cially:cially /app/cially-web/.next/static ./.next/static
+COPY --from=build-web --chown=cially:cially /app/cially-web/.next/static ./cially-web/.next/static
 USER cially
 EXPOSE 3000
 ENV NODE_PATH=/app/node_modules
