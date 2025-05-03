@@ -39,13 +39,20 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha
 
-      - name: Build and push Docker image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image (cially-bot)
         uses: docker/build-push-action@v6
         with:
-          context: ./cially-bot
+          context: .
+          file: ./Dockerfile
+          target: cially-bot
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-web:
      runs-on: ubuntu-latest
@@ -84,13 +91,20 @@ jobs:
              type=semver,pattern={{major}}.{{minor}}
              type=sha
 
-       - name: Build and push Docker image
-         uses: docker/build-push-action@v6
-         with:
-           context: ./cially-web
-           push: ${{ github.event_name != 'pull_request' }}
-           tags: ${{ steps.meta.outputs.tags }}
-           labels: ${{ steps.meta.outputs.labels }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image (cially-web)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          target: cially-web
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-pocketbase:
     runs-on: ubuntu-latest
