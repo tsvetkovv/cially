@@ -17,7 +17,17 @@ let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
 // FIXME Error when there are no messages
 
-export default function MessagesDashboard() {
+import { Suspense } from "react";
+
+export default function MessagesActivityPage() {
+	return (
+		<Suspense>
+			<ClientComponent />
+		</Suspense>
+	)
+}
+
+function ClientComponent() {
 	const searchParams = useSearchParams();
 	const guildID = searchParams.get("guildID");
 	const [chartData, setChartData] = useState([{ amount: 69 }]);
