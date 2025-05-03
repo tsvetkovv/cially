@@ -29,10 +29,10 @@ export default function GeneralMessageDataCard({ chartData }) {
 					<div className="text-xl font-semibold"><Activity className="inline mr-2"/>General Data</div>
 					<div className="font-sans text-sm mt-1 text-white/60">More insights regarding the messages and their content</div>
 				</div>
-				<div className="grid grid-cols-2 ">
+				<div className="grid grid-cols-2 gap-x-3">
 					<div className="">
 						<div>Messages:  <p className="inline text-white/80 font-sans">{ArrayChartData[0].total_messages}</p></div>
-						<div>Photos / Videos Sent:  <p className="inline text-white/80 font-sans">{ArrayChartData[0].total_attachments}</p></div>
+						<div>Media Sent:  <p className="inline text-white/80 font-sans">{ArrayChartData[0].total_attachments}</p></div>
 
 					</div>
 					<div>
