@@ -53,7 +53,7 @@ export default function MessagesDashboard() {
 
                 <div className="h-[90%]">
 
-                    <div className="grid grid-cols-1 w-[40%] sm:w-[95%] sm:grid-cols-2 ml-10 mr-5 mt-10 gap-5">
+                    <div className="grid grid-cols-1 w-[40%] sm:w-[85%] sm:grid-cols-2 ml-10 mr-5 mt-10 gap-5">
                         <div>
                             <ActiveChannels chartData={data_channels} />
                         </div>
@@ -62,7 +62,7 @@ export default function MessagesDashboard() {
                         </div>
                     </div>
 
-                    <div className="ml-10 mr-5 mt-5 w-[40%] sm:w-[95%]">
+                    <div className="ml-10 mr-5 mt-5 w-[40%] sm:w-[85%]">
                         <ActiveHours chartData={data_hours} />
 
                         <div className="mt-5">
