@@ -9,6 +9,7 @@ import ActiveChannels from "../activity/_components/active_channels";
 import ActiveHours from "../activity/_components/active_hours";
 import ActiveUsers from "../activity/_components/active_users";
 import GeneralActivityData from "./_components/general_data";
+import { Skeleton } from "@/components/ui/skeleton";
 
 let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
@@ -45,9 +46,26 @@ function ClientComponent() {
         return <GuildNotFound />
     } else if (!chartData.finalData) {
         return (
-            <div className="translate-x-100">
-                <LoadingSVG />
-            </div>
+            <>
+				<div className="mt-10 ml-10 text-2xl">Messages Analytics</div>
+				<hr className="mt-2 mr-5 ml-5 w-50 sm:w-dvh"></hr>
+
+				<div className="mt-10 ml-8 grid max-w-80 grid-rows-3 gap-y-4 sm:mr-5 sm:ml-10 sm:max-w-full sm:grid-cols-3 sm:grid-rows-none sm:gap-x-3 sm:gap-y-0">
+				<Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" />
+				<Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" />
+				<Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" />
+					
+				</div>
+
+				<div className="ml-10 mr-5">
+				<Skeleton className="mt-50 w-dvh h-[150px] place-self-center rounded-xl" />
+				</div>
+
+
+				<div className="mt-5 pb-5 text-center text-gray-600 text-xs">
+					Thanks for using Cially Dashboard!
+				</div>
+			</>
         );
     } else {
         let data_channels = chartData.finalData[0].ChannelData;

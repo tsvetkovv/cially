@@ -20,7 +20,7 @@ export default async function Dashboard({
 	let welcome_message = String(new_date).includes("AM")
 		? "Good Morning"
 		: "Good Evening";
-
+	
 	return (
 		<>
 			<div className="mt-10 mr-4 ml-10 grid grid-rows-3 sm:min-w-dvh sm:grid-rows-none">
