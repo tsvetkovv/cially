@@ -14,6 +14,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import GuildNotFound from "./_components/_events/guildNotFound";
+import LoadingSVG from "./_components/_events/loading-page";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function DataDashboard() {
   try {
@@ -23,11 +26,28 @@ export default async function DataDashboard() {
     let dataJSON = (data) ? await data.json() : [{ error: "cant communicate" }]
     guildData = dataJSON
 
-    if (guildData.code) {
-      return <GuildNotFound />
-    } else if (!guildData.AvailableGuilds) {
-      return <LoadingSVG />
+    if (!guildData.AvailableGuilds) {
+      return (
+        <>
+          <div className="w-20 place-self-center">
+            <img src="/logo-png.png"></img>
+          </div>
+          <div className="text-2xl  text-center">Available Guilds</div>
+          <div className="text-sm text-gray-400 text-center">Please Select the Guild you would like to view</div>
+          
+          <div className="mb-10"></div>
+
+          
+          <div className={`grid gap-y-5 grid-cols-1 sm:grid-cols-3 mx-10`}><Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" /><Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" /><Skeleton className="w-[250px] h-[150px] place-self-center rounded-xl" /></div>
+
+          <div className="text-center mt-15 text-xs text-gray-600 pb-5">
+            Thanks for using Cially Dashboard!
+          </div>
+        </>
+      )
     } else {
+
+      
 
       let guildDataArray = guildData.AvailableGuilds
       let guildLength = guildDataArray.length
@@ -94,8 +114,11 @@ export default async function DataDashboard() {
       )
 
     }
-  } catch (err) {
 
+    } catch (err) {
+
+      let error = err.toString(); 
+      
     // TODO add this error screen to every place where fetching occurs
 
     return (
@@ -106,10 +129,13 @@ export default async function DataDashboard() {
         <div className="text-center mx-5">Looks like the Discord Bot can't communicate with the Dashboard.<br></br>
           Please make sure that you followed the setup instructions correctly and that the bot is up and running!<br></br><br></br>
           Are you facing other issues? Check our GitHub and seek support!<br></br>
-          <a href="https://github.com/skellgreco/cially" className="text-blue-400 underline">GitHub Redirect</a>
+          <a href="https://github.com/skellgreco/cially" className="text-blue-400 underline">GitHub Redirect</a><br></br><br></br>
+          <div>Error {err.name}</div>
+          <div>{error}</div>
         </div>
       </>
     )
-  }
+  
+}
 
 }
