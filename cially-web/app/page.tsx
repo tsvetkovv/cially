@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-let BOT_API_URL = process.env.BOT_API_URL
+let BOT_API_URL = process.env.NEXT_PUBLIC_BOT_API_URL
 import {
   Tooltip,
   TooltipContent,
