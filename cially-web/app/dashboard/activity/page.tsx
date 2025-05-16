@@ -11,11 +11,10 @@ import ActiveUsers from "../activity/_components/active_users";
 import GeneralActivityData from "./_components/general_data";
 import { Skeleton } from "@/components/ui/skeleton";
 
-let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
-
 // FIXME Error when there are no messages
 
 import { Suspense } from "react";
+import {useEnv} from "@/app/_components/_env/provider";
 
 export default function MessagesDashboard() {
     return (
@@ -29,6 +28,7 @@ function ClientComponent() {
     const searchParams = useSearchParams();
     const guildID = searchParams.get("guildID");
     const [chartData, setChartData] = useState([{ amount: 69 }]);
+    const { NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL } = useEnv();
 
     useEffect(() => {
         async function fetchData() {

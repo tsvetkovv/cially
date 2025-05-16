@@ -1,8 +1,7 @@
 import BottomCard from "./_main-components/bottom-card";
 import MemberBlock from "./_main-components/member-card";
 import MessagesBlock from "./_main-components/messages-card";
-
-let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+import { getEnv } from "@/app/_components/_env/env";
 
 export default async function Dashboard({
 	searchParams,
@@ -10,6 +9,7 @@ export default async function Dashboard({
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const guildID = (await searchParams).guildID;
+	const { NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL } = await getEnv();
 
 	let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`);
 	let data = await API_REQ.json();

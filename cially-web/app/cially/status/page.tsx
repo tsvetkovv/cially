@@ -15,12 +15,12 @@ import { Badge } from '@/components/ui/badge';
 
 import { Database, Rss, CheckCircle, XCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button"
-
-let WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+import {useEnv} from "@/app/_components/_env/provider";
 
 
 export default function Status() {
     const [statusData, setStatusData] = useState([{ amount: 69 }]);
+    const { NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL } = useEnv();
 
     useEffect(() => {
         async function fetchData() {

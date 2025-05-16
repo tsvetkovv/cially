@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/_shadcn/theme-provider";
+import { EnvProvider } from "./_components/_env/provider";
 
 export const metadata: Metadata = {
 	title: "Cially Dashboard",
@@ -25,15 +26,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					<div className="overflow-x-hidden min-h-screen">
 						<div className="bg-gr fixed inset-0 w-full h-full -z-10"></div>
 						<div className="relative z-0 p-6">
-							<ThemeProvider
-								attribute="class"
-								defaultTheme="dark"
-								enableSystem
-								disableTransitionOnChange
-							>
-									{children}
-
-							</ThemeProvider>
+							<EnvProvider>
+								<ThemeProvider
+									attribute="class"
+									defaultTheme="dark"
+									enableSystem
+									disableTransitionOnChange
+								>
+										{children}
+								</ThemeProvider>
+							</EnvProvider>
 						</div>
 					</div>
 				</body>
