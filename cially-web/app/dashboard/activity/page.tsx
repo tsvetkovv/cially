@@ -28,7 +28,7 @@ function ClientComponent() {
     const searchParams = useSearchParams();
     const guildID = searchParams.get("guildID");
     const [chartData, setChartData] = useState([{ amount: 69 }]);
-    const { NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL } = useEnv();
+    const { WEBSITE_URL } = useEnv();
 
     useEffect(() => {
         async function fetchData() {

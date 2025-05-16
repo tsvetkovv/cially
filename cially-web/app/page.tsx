@@ -20,8 +20,8 @@ import { getEnv } from "@/app/_components/_env/env";
 
 export default async function DataDashboard() {
 	const {
-		NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL,
-		NEXT_PUBLIC_BOT_API_URL: BOT_API_URL,
+		WEBSITE_URL,
+		BOT_API_URL,
 	} = await getEnv();
 	try {
 

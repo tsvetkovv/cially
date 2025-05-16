@@ -9,7 +9,7 @@ export default async function Dashboard({
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const guildID = (await searchParams).guildID;
-	const { NEXT_PUBLIC_WEBSITE_URL: WEBSITE_URL } = await getEnv();
+	const { WEBSITE_URL } = await getEnv();
 
 	let API_REQ = await fetch(`${WEBSITE_URL}/api/server/${guildID}/fetchGuild`);
 	let data = await API_REQ.json();
